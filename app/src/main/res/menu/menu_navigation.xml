@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeItem"
+        android:title="Início"
+        android:icon="@drawable/ic_home"/>
+    <item
+        android:id="@+id/avalItem"
+        android:title="Avaliações"
+    android:icon="@drawable/ic_poll"/>
+
+    <item
+        android:id="@+id/procurarItem"
+        android:title="Procurar"
+        android:icon="@drawable/ic_action_search"/>
+    <item
+        android:id="@+id/sobreItem"
+        android:title="Sobre"
+        android:icon="@drawable/ic_insert_emoticon"/>
+
+    <item
+        android:id="@+id/optItem"
+        android:title="Opções"
+        android:icon="@drawable/ic_action_gear"/>
+
+</menu>
