@@ -1,14 +1,13 @@
 package com.example.ender.dadapp;
 
-import android.app.FragmentTransaction;
+
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements FragmentRatings.DetalharAvaliacao{
 
     private BottomNavigationView bottomNavigationView;
 
@@ -20,7 +19,7 @@ public class MainActivity extends AppCompatActivity{
 
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.frame_layout,new FragmentMain())
+                .replace(R.id.frame_layout,new FragmentRatings())
                 .commit();
 
 
@@ -33,25 +32,23 @@ public class MainActivity extends AppCompatActivity{
                 switch (item.getItemId()) {
                     case R.id.homeItem:
                         FragmentMain fragmentHome = new FragmentMain();
-                        //fragmentHome.setColorBack(0xFFFF0000);
                         getFragmentManager()
                                 .beginTransaction()
                                 .replace(R.id.frame_layout,fragmentHome)
                                 .commit();
                         break;
                     case R.id.avalItem:
-                        FragmentMain fragmentAval = new FragmentMain();
-                        //fragmentAval.setColorBack(0xFF00FF00);
+                        FragmentRatings fragmentRate = new FragmentRatings();
                         getFragmentManager()
                                 .beginTransaction()
-                                .replace(R.id.frame_layout,fragmentAval)
+                                .replace(R.id.frame_layout,fragmentRate)
                                 .commit();
                         break;
                     case R.id.procurarItem:
-                        FragmentMain fragmentProc = new FragmentMain();
+                        FragmentSearch fragmentSearch= new FragmentSearch();
                         getFragmentManager()
                                 .beginTransaction()
-                                .replace(R.id.frame_layout,fragmentProc)
+                                .replace(R.id.frame_layout,fragmentSearch)
                                 .commit();
                         break;
                     case R.id.sobreItem:
@@ -69,13 +66,22 @@ public class MainActivity extends AppCompatActivity{
                                 .commit();
                         break;
                 }
-
-
-
-
                 return true;
             }
         });
 
+    }
+
+    @Override
+    public void detalharAvaliacao(String titulo) {
+        Bundle bundle = new Bundle();
+        bundle.putString("btn", titulo);
+
+        FragmentDetails fragmentDetails = new FragmentDetails();
+        fragmentDetails.setArguments(bundle);
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_layout,fragmentDetails)
+                .commit();
     }
 }
