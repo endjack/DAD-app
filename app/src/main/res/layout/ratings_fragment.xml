@@ -48,234 +48,239 @@
             android:layout_weight="1"/>
     </LinearLayout>
 
-
-    <android.support.v7.widget.CardView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        app:elevation="10dp"
-        app:cardCornerRadius="@dimen/cardview_compat_inset_shadow">
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@color/fundoCinzaClaro">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    app:cardCornerRadius="@dimen/cardview_compat_inset_shadow"
+                    app:elevation="10dp">
 
-            <View
-                android:layout_width="18px"
-                android:layout_height="90dp"
-                android:background="@color/colorPrimary"
-                android:layout_marginLeft="10dp"
-                />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/fundoCinzaClaro"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="18px"
+                            android:layout_height="90dp"
+                            android:layout_marginLeft="10dp"
+                            android:background="@color/colorPrimary" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingLeft="10dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Melhor Média de Postura Profissional"
+                                android:textColor="@android:color/black"
+                                android:textSize="10pt" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Uma descrição" />
+
+                            <Button
+                                android:id="@+id/btnCard1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="30dp"
+                                android:layout_gravity="end"
+                                android:layout_marginRight="10dp"
+                                android:background="@drawable/button_radius"
+                                android:text="Detalhar"
+                                android:textAllCaps="false"
+                                android:textColor="@android:color/white" />
+                            <!--android:shadowRadius="@android:integer/config_longAnimTime"/>-->
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    app:cardCornerRadius="@dimen/cardview_compat_inset_shadow"
+                    app:elevation="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/fundoCinzaClaro"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="18px"
+                            android:layout_height="90dp"
+                            android:layout_marginLeft="10dp"
+                            android:background="@color/fundoVermelhorLogo" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingLeft="10dp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Pior Média de Postura Profissional"
+                                android:textColor="@android:color/black"
+                                android:textSize="10pt" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Uma descrição" />
+
+                            <Button
+                                android:id="@+id/btnCard2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="30dp"
+                                android:layout_gravity="end"
+                                android:layout_marginRight="10dp"
+                                android:background="@drawable/button_radius"
+                                android:text="Detalhar"
+                                android:textAllCaps="false"
+                                android:textColor="@android:color/white" />
+                            <!--android:shadowRadius="@android:integer/config_longAnimTime"/>-->
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            app:elevation="10dp"
+            app:cardCornerRadius="@dimen/cardview_compat_inset_shadow">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="10dp">
+                android:orientation="horizontal"
+                android:background="@color/fundoCinzaClaro">
 
-                <TextView
+                <View
+                    android:layout_width="18px"
+                    android:layout_height="90dp"
+                    android:background="@color/colorPrimary"
+                    android:layout_marginLeft="10dp"
+                    />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="10pt"
-                    android:text="Melhor Média de Postura Profissional"
-                    android:textColor="@android:color/black"/>
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Uma descrição"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="10pt"
+                        android:text="Melhor Média de Atuação Profissional"
+                        android:textColor="@android:color/black"/>
 
-                <Button
-                    android:id="@+id/btnCard1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:text="Detalhar"
-                    android:layout_marginRight="10dp"
-                    android:layout_gravity="end"
-                    android:textColor="@android:color/white"
-                    android:background="@drawable/button_radius"
-                    android:textAllCaps="false"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Uma descrição"/>
+
+                    <Button
+                        android:id="@+id/btnCard3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:text="Detalhar"
+                        android:layout_marginRight="10dp"
+                        android:layout_gravity="end"
+                        android:textColor="@android:color/white"
+                        android:background="@drawable/button_radius"
+                        android:textAllCaps="false"/>
                     <!--android:shadowRadius="@android:integer/config_longAnimTime"/>-->
 
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        app:elevation="10dp"
-        app:cardCornerRadius="@dimen/cardview_compat_inset_shadow">
-
-        <LinearLayout
+        </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@color/fundoCinzaClaro">
-
-            <View
-                android:layout_width="18px"
-                android:layout_height="90dp"
-                android:background="@color/fundoVermelhorLogo"
-                android:layout_marginLeft="10dp"
-                />
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            app:elevation="10dp"
+            app:cardCornerRadius="@dimen/cardview_compat_inset_shadow">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="10dp">
+                android:orientation="horizontal"
+                android:background="@color/fundoCinzaClaro">
 
-                <TextView
+                <View
+                    android:layout_width="18px"
+                    android:layout_height="90dp"
+                    android:background="@color/fundoVermelhorLogo"
+                    android:layout_marginLeft="10dp"
+                    />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="10pt"
-                    android:text="Pior Média de Postura Profissional"
-                    android:textColor="@android:color/black"/>
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Uma descrição"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="10pt"
+                        android:text="Pior Média de Atuação Profissional"
+                        android:textColor="@android:color/black"/>
 
-                <Button
-                    android:id="@+id/btnCard2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:text="Detalhar"
-                    android:layout_marginRight="10dp"
-                    android:layout_gravity="end"
-                    android:textColor="@android:color/white"
-                    android:background="@drawable/button_radius"
-                    android:textAllCaps="false"/>
-                <!--android:shadowRadius="@android:integer/config_longAnimTime"/>-->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Uma descrição"/>
 
+                    <Button
+                        android:id="@+id/btnCard4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:text="Detalhar"
+                        android:layout_marginRight="10dp"
+                        android:layout_gravity="end"
+                        android:textColor="@android:color/white"
+                        android:background="@drawable/button_radius"
+                        android:textAllCaps="false"/>
+                    <!--android:shadowRadius="@android:integer/config_longAnimTime"/>-->
+
+                </LinearLayout>
             </LinearLayout>
-
-
-
+        </android.support.v7.widget.CardView>
         </LinearLayout>
 
-
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        app:elevation="10dp"
-        app:cardCornerRadius="@dimen/cardview_compat_inset_shadow">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@color/fundoCinzaClaro">
-
-            <View
-                android:layout_width="18px"
-                android:layout_height="90dp"
-                android:background="@color/colorPrimary"
-                android:layout_marginLeft="10dp"
-                />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="10dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="10pt"
-                    android:text="Melhor Média de Atuação Profissional"
-                    android:textColor="@android:color/black"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Uma descrição"/>
-
-                <Button
-                    android:id="@+id/btnCard3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:text="Detalhar"
-                    android:layout_marginRight="10dp"
-                    android:layout_gravity="end"
-                    android:textColor="@android:color/white"
-                    android:background="@drawable/button_radius"
-                    android:textAllCaps="false"/>
-                <!--android:shadowRadius="@android:integer/config_longAnimTime"/>-->
-
-            </LinearLayout>
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        app:elevation="10dp"
-        app:cardCornerRadius="@dimen/cardview_compat_inset_shadow">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@color/fundoCinzaClaro">
-
-            <View
-                android:layout_width="18px"
-                android:layout_height="90dp"
-                android:background="@color/fundoVermelhorLogo"
-                android:layout_marginLeft="10dp"
-                />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="10dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="10pt"
-                    android:text="Pior Média de Atuação Profissional"
-                    android:textColor="@android:color/black"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Uma descrição"/>
-
-                <Button
-                    android:id="@+id/btnCard4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:text="Detalhar"
-                    android:layout_marginRight="10dp"
-                    android:layout_gravity="end"
-                    android:textColor="@android:color/white"
-                    android:background="@drawable/button_radius"
-                    android:textAllCaps="false"/>
-                <!--android:shadowRadius="@android:integer/config_longAnimTime"/>-->
-
-            </LinearLayout>
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </ScrollView>
 
 </LinearLayout>
