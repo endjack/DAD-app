@@ -1,44 +1,55 @@
 package com.example.ender.dadapp;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
+import android.support.annotation.UiThread;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.IOException;
 import java.util.List;
 
 import adapters.SearchResultsListAdapter;
 import models.Docente;
-import models.Unidade;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FragmentSearch extends Fragment {
 
     RecyclerView recyclerView;
     SearchResultsListAdapter searchResultsListAdapter;
-
+    private Retrofit retrofit;
     EditText edtBuscar;
     Button bttBuscar;
-    String nome;
+    DetalharDocenteListener listener;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.buscar_fragment, container,false );
 
+        Gson gson = new GsonBuilder().registerTypeAdapter(Docente.class, new DocenteDeserializable()).create();
+        retrofit = new Retrofit.Builder()
+                .baseUrl(DocenteService.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
 
 
         edtBuscar = view.findViewById(R.id.edtBuscar);
@@ -58,11 +69,13 @@ public class FragmentSearch extends Fragment {
 
         return view;
     }
+    public void abrirDetalhesDocente(){
+
+    }
 
     public void carregarDadosDocente(String nome) {
-        RetrofitConfig retrofitConfig = RetrofitConfig.retrofit.create(RetrofitConfig.class);
-
-        Call<Docente> call = retrofitConfig.getDocente(nome);
+        DocenteService docenteService = retrofit.create(DocenteService.class);
+        Call<Docente> call = docenteService.getDocente(nome);
 
         call.enqueue(new Callback<Docente>() {
             @Override
@@ -88,31 +101,60 @@ public class FragmentSearch extends Fragment {
     }
 
     public void carregarTodosDocentes() {
-        RetrofitConfig retrofitConfig = RetrofitConfig.retrofit.create(RetrofitConfig.class);
-        Call<List<Docente>> call = retrofitConfig.getDocentes();
+        DocenteService docenteService = retrofit.create(DocenteService.class);
+        final Call<List<Docente>> call = docenteService.getDocentes();
+        final Handler handler = new Handler(Looper.getMainLooper());
 
-        call.enqueue(new Callback<List<Docente>>() {
+        new Thread(new Runnable() {
+            List<Docente> listaDocentes;
             @Override
-            public void onResponse(Call<List<Docente>> call, Response<List<Docente>> response) {
-                List<Docente> listaDocentes = response.body();
-                Log.i("LOG-RESULTS", "RESPONSE CODE: "+response.code());
+            public void run() {
 
-                for (Docente docente: listaDocentes){
+                try {
+                    listaDocentes = call.execute().body();
 
-                    Log.i("LOG-RESULTS", docente.nome+"\n");
+                    if(listaDocentes != null){
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                searchResultsListAdapter = new SearchResultsListAdapter(getActivity(), listaDocentes, new SearchResultsListAdapter.ItemDetailsListener() {
+                                    @Override
+                                    public void onDetailsClick(Docente docente) {
+                                       listener.detalharDocente(docente);
+                                    }
+                                });
 
+                                recyclerView.setAdapter(searchResultsListAdapter);
+
+                            }
+                        });
+
+                    }
+
+//                    for(Docente d: docenteList){
+//                        Log.i("LOG-RESULTS", d.nome+"\n");
+//                        Log.i("LOG-RESULTS", d.unidade.lotacao+"\n");
+//                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-
-                searchResultsListAdapter = new SearchResultsListAdapter(getActivity(), listaDocentes);
-                recyclerView.setAdapter(searchResultsListAdapter);
-
             }
-
-            @Override
-            public void onFailure(Call<List<Docente>> call, Throwable t) {
-                Toast.makeText(getActivity(), "Falha no carregamento dos dados!", Toast.LENGTH_SHORT).show();
-            }
-
-        });
+        }).start();
     }
+
+    public interface DetalharDocenteListener{
+        void detalharDocente(Docente docente);
+    }
+
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof FragmentSearch.DetalharDocenteListener) {
+            listener = (FragmentSearch.DetalharDocenteListener) activity;
+        } else {
+            throw new ClassCastException();
+        }
+    }
+
 }

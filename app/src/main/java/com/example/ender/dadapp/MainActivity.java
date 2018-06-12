@@ -7,7 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity implements FragmentRatings.DetalharAvaliacao{
+import models.Docente;
+
+public class MainActivity extends AppCompatActivity implements FragmentSearch.DetalharDocenteListener{
 
     private BottomNavigationView bottomNavigationView;
 
@@ -73,15 +75,16 @@ public class MainActivity extends AppCompatActivity implements FragmentRatings.D
     }
 
     @Override
-    public void detalharAvaliacao(String titulo) {
-        Bundle bundle = new Bundle();
-        bundle.putString("btn", titulo);
+    public void detalharDocente(Docente docente) {
 
-        FragmentDetails fragmentDetails = new FragmentDetails();
-        fragmentDetails.setArguments(bundle);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("docente", docente);
+
+        FragmentDocenteDetails fragmentDocenteDetails = new FragmentDocenteDetails();
+        fragmentDocenteDetails.setArguments(bundle);
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.frame_layout,fragmentDetails)
+                .replace(R.id.frame_layout,fragmentDocenteDetails)
                 .commit();
     }
 }

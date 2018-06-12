@@ -22,27 +22,35 @@ import com.jjoe64.graphview.series.DataPoint;
 
 import java.util.ArrayList;
 
-public class FragmentDetails extends Fragment {
+import models.Docente;
+
+public class FragmentDocenteDetails extends Fragment {
 
     GraphView graph;
-    TextView textView;
-    String titulo = "";
     PieChart pieChart;
+    Docente docente;
+
+    TextView tvDetalhesNome;
+    TextView tvDetalhesFormacao;
+    TextView tvDetalhesSetor;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.details_fragment, container, false);
 
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            titulo = bundle.getString("btn");
-        }
+        tvDetalhesNome = view.findViewById(R.id.tvDetalhesNome);
+        tvDetalhesFormacao = view.findViewById(R.id.tvDetalhesFormacao);
+        tvDetalhesSetor = view.findViewById(R.id.tvDetalhesSetor);
+
+        docente = (Docente) getArguments().get("docente");
+
+        tvDetalhesNome.setText(docente.nome);
+        tvDetalhesFormacao.setText(docente.formacao);
+        tvDetalhesSetor.setText(docente.unidade.lotacao);
 
         pieChart = view.findViewById(R.id.pieChart);
         graph = view.findViewById(R.id.graph);
-        textView = view.findViewById(R.id.tv);
-        textView.setText(titulo);
 
         gerarGrafico();
         gerarPieChart();

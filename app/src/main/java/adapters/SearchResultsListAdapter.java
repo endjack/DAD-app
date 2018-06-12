@@ -1,14 +1,21 @@
 package adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.ender.dadapp.FragmentDocenteDetails;
+import com.example.ender.dadapp.FragmentRatings;
+import com.example.ender.dadapp.FragmentSearch;
 import com.example.ender.dadapp.R;
 
 import java.util.ArrayList;
@@ -20,10 +27,12 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
 
     private Context context;
     private List<Docente> itens;
+    ItemDetailsListener listener;
 
-    public SearchResultsListAdapter(Context context, List lista) {
+    public SearchResultsListAdapter(Context context, List lista, ItemDetailsListener listener) {
         this.context = context;
         this.itens = lista;
+        this.listener = listener;
         Log.i("LOG-RESULTS", "TAMANHO LISTA: "+getItemCount());
     }
 
@@ -36,11 +45,21 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ResultsHolder holder, int position) {
-       Docente docente = itens.get(position);
-       holder.tvResultadoNome.setText(docente.getNome().toUpperCase());
-       holder.tvResultadoSetor.setText("Setor: ");
+    public void onBindViewHolder(@NonNull final ResultsHolder holder, final int position) {
+       final Docente docente = itens.get(position);
+       holder.tvResultadoNome.setText(docente.nome.toUpperCase());
+       holder.tvResultadoSetor.setText("Setor: "+docente.unidade.lotacao);
+
+       holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               listener.onDetailsClick(docente);
+           }
+       });
+
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -52,11 +71,19 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
 
         private TextView tvResultadoNome;
         private TextView tvResultadoSetor;
+        private LinearLayout linearLayout;
 
         public ResultsHolder(View itemView) {
             super(itemView);
+            linearLayout = itemView.findViewById(R.id.layoutResults);
             tvResultadoNome = itemView.findViewById(R.id.tvResultadoNome);
             tvResultadoSetor = itemView.findViewById(R.id.tvResultadoSetor);
+
         }
     }
+
+    public interface ItemDetailsListener {
+        public void onDetailsClick(Docente docente);
+    }
+
 }

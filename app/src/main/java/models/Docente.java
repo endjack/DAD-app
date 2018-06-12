@@ -1,8 +1,11 @@
 package models;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.Date;
 
-public class Docente {
+public class Docente implements Serializable{
 
     public Integer id;
     public String nome;
@@ -11,6 +14,14 @@ public class Docente {
     public Date data_admissao;
 
     public Docente() {
+    }
+
+    public Docente(Integer id, String nome, String formacao, Unidade unidade, Date data_admissao) {
+        this.id = id;
+        this.nome = nome;
+        this.formacao = formacao;
+        this.unidade = unidade;
+        this.data_admissao = data_admissao;
     }
 
     public Integer getId() {

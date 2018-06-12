@@ -1,8 +1,12 @@
 package models;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class Unidade {
+public class Unidade implements Serializable {
+
 
     public Integer id;
     public String lotacao;
@@ -10,6 +14,13 @@ public class Unidade {
     public List<Docente> docentes;
 
     public Unidade(){
+    }
+
+    public Unidade(Integer id, String lotacao, List<ComponenteCurricular> componentes, List<Docente> docentes) {
+        this.id = id;
+        this.lotacao = lotacao;
+        this.componentes = componentes;
+        this.docentes = docentes;
     }
 
     public Integer getId() {

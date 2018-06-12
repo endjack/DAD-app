@@ -5,11 +5,27 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tv"
+        android:id="@+id/tvDetalhesNome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Detalhes"
-        android:textAlignment="center"/>
+        android:textColor="@android:color/black"
+        android:text="Nome:"
+        android:paddingLeft="10dp"
+        android:textAlignment="textStart"/>
+    <TextView
+        android:id="@+id/tvDetalhesFormacao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="formacao:"
+        android:paddingLeft="10dp"
+        android:textAlignment="textStart"/>
+    <TextView
+        android:id="@+id/tvDetalhesSetor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Setor:"
+        android:paddingLeft="10dp"
+        android:textAlignment="textStart"/>
 
     <com.jjoe64.graphview.GraphView
         android:id="@+id/graph"

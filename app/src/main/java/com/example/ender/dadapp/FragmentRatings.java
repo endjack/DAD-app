@@ -18,7 +18,6 @@ import java.util.List;
 public class FragmentRatings extends Fragment {
 
     private Button btnCard1, btnCard2, btnCard3, btnCard4;
-    private DetalharAvaliacao listener;
     private Spinner spinnerAnos;
 
     @Nullable
@@ -34,31 +33,6 @@ public class FragmentRatings extends Fragment {
         spinnerAnos = view.findViewById(R.id.spinnerAnos);
         spinnerAnos.setBackgroundColor(0xFFf5f5f5);
 
-        btnCard1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    listener.detalharAvaliacao("Melhor Média de Postura Profissional");
-            }
-        });
-        btnCard2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.detalharAvaliacao("Pior Média de Postura Profissional");
-            }
-        });
-        btnCard3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.detalharAvaliacao("Melhor Média de Atuação Profissional");
-            }
-        });
-        btnCard4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.detalharAvaliacao("Pior Média de Atuação Profissional");
-            }
-        });
-
 
 
         CharSequence[] listaAnos = getResources().getTextArray(R.array.listAnos);
@@ -71,21 +45,6 @@ public class FragmentRatings extends Fragment {
         spinnerAnos.setSelection(listaAnos.length-1);
 
         return view;
-    }
-
-    public interface DetalharAvaliacao{
-        void detalharAvaliacao(String btn);
-    }
-
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (activity instanceof DetalharAvaliacao) {
-            listener = (DetalharAvaliacao) activity;
-        } else {
-            throw new ClassCastException();
-        }
     }
 
 }
