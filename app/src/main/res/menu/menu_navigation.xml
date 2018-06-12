@@ -19,9 +19,9 @@
         android:title="Sobre"
         android:icon="@drawable/ic_insert_emoticon"/>
 
-    <item
-        android:id="@+id/optItem"
-        android:title="Opções"
-        android:icon="@drawable/ic_action_gear"/>
+    <!--<item-->
+        <!--android:id="@+id/optItem"-->
+        <!--android:title="Opções"-->
+        <!--android:icon="@drawable/ic_action_gear"/>-->
 
 </menu>

@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements FragmentRatings.D
 
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.frame_layout,new FragmentRatings())
+                .replace(R.id.frame_layout,new FragmentMain())
                 .commit();
 
 
@@ -58,13 +58,13 @@ public class MainActivity extends AppCompatActivity implements FragmentRatings.D
                                 .replace(R.id.frame_layout,fragmentSobre)
                                 .commit();
                         break;
-                    case R.id.optItem:
-                        FragmentMain fragmentOpt = new FragmentMain();
-                        getFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.frame_layout,fragmentOpt)
-                                .commit();
-                        break;
+//                    case R.id.optItem:
+//                        FragmentMain fragmentOpt = new FragmentMain();
+//                        getFragmentManager()
+//                                .beginTransaction()
+//                                .replace(R.id.frame_layout,fragmentOpt)
+//                                .commit();
+//                        break;
                 }
                 return true;
             }

@@ -15,14 +15,38 @@
             android:layout_height="wrap_content"
             android:src="@drawable/logo_dad"/>
     </RelativeLayout>
+
     <EditText
+        android:id="@+id/edtBuscar"
         android:layout_width="match_parent"
-        android:textAlignment="center"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
+        android:drawableLeft="@drawable/ic_search_roxo"
         android:hint="Procurar Avaliação de Professor"
-        android:drawableLeft="@drawable/ic_search_roxo"/>
+        android:singleLine="true"
+        android:textAlignment="center" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/bttBuscar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Buscar"
+            android:textAllCaps="false"
+            android:layout_centerInParent="true"
+            />
+    </RelativeLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_results"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
 
 
 </LinearLayout>
