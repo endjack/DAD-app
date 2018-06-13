@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
-import android.support.annotation.UiThread;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,6 +23,8 @@ import java.io.IOException;
 import java.util.List;
 
 import adapters.SearchResultsListAdapter;
+import api.DocenteDeserializable;
+import api.DocenteService;
 import models.Docente;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,12 +34,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FragmentSearch extends Fragment {
 
-    RecyclerView recyclerView;
-    SearchResultsListAdapter searchResultsListAdapter;
+    private RecyclerView recyclerView;
+    private SearchResultsListAdapter searchResultsListAdapter;
     private Retrofit retrofit;
-    EditText edtBuscar;
-    Button bttBuscar;
-    DetalharDocenteListener listener;
+    private EditText edtBuscar;
+    private Button bttBuscar;
+    private DetalharDocenteListener listener;
+    private String ultimaPesquisa="";
 
     @Nullable
     @Override
@@ -62,6 +64,8 @@ public class FragmentSearch extends Fragment {
         bttBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ultimaPesquisa = edtBuscar.getText().toString();
+                Toast.makeText(getActivity(), ultimaPesquisa, Toast.LENGTH_SHORT).show();
                 carregarTodosDocentes();
 
             }
@@ -69,10 +73,49 @@ public class FragmentSearch extends Fragment {
 
         return view;
     }
-    public void abrirDetalhesDocente(){
+
+    /**
+     * Chamado ao mudar de Fragment pelo MenuNavigation ou pelo voltão voltar.
+     * Ao ser chamado ele salva em memória o valor da ultima pesquisa no EditText em
+     * um Bundle (Pacote) que está na MainActivity (saveDadosFragments)
+     */
+    @Override
+    public void onStop() {
+        Log.i("TAG_ESTADO", "Entrei onStop");
+        super.onStop();
+        getActivity().getIntent().getBundleExtra("save").putString("ultimaPesquisa",ultimaPesquisa);
+    }
+
+    /**
+     * Chamado ao retornar ao Fragment.
+     * Pega o Bundle (Pacote) que está na MainActivity (saveDadosFragments) e insere a ultima string
+     * chamada no campo de pesquisa novamente.
+     * Também chama o método carregarTodosDocentes() para recarregar a pesquisa na lista de Resultados
+     * @param savedInstanceState Bundle da activity (Chega vazia)
+     */
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        savedInstanceState = getActivity().getIntent().getBundleExtra("save");
+        Log.i("TAG_ESTADO", "Entrei onActivityCreated");
+
+        if(savedInstanceState != null) {
+            ultimaPesquisa = savedInstanceState.getString("ultimaPesquisa");
+
+            if (ultimaPesquisa == null) {
+                //fazer nada
+            }else{
+                edtBuscar.setText(savedInstanceState.getString("ultimaPesquisa"));
+                carregarTodosDocentes();
+            }
+        }
 
     }
 
+    /**
+     * Faz uma chamada ao Service de Docentes e recebe um Docente pesquisa por nome.
+     * @param nome Nome do Docente pesquisado na EditText
+     */
     public void carregarDadosDocente(String nome) {
         DocenteService docenteService = retrofit.create(DocenteService.class);
         Call<Docente> call = docenteService.getDocente(nome);
@@ -100,6 +143,9 @@ public class FragmentSearch extends Fragment {
 
     }
 
+    /**
+     * Faz uma chamada ao Service de Docentes e recebe uma lista com todos os Docentes.
+     */
     public void carregarTodosDocentes() {
         DocenteService docenteService = retrofit.create(DocenteService.class);
         final Call<List<Docente>> call = docenteService.getDocentes();
@@ -130,11 +176,6 @@ public class FragmentSearch extends Fragment {
                         });
 
                     }
-
-//                    for(Docente d: docenteList){
-//                        Log.i("LOG-RESULTS", d.nome+"\n");
-//                        Log.i("LOG-RESULTS", d.unidade.lotacao+"\n");
-//                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -142,11 +183,17 @@ public class FragmentSearch extends Fragment {
         }).start();
     }
 
+    /**
+     * Interface para comunicação com a MainActivity
+     */
     public interface DetalharDocenteListener{
         void detalharDocente(Docente docente);
     }
 
-
+    /**
+     * Necessário para instanciar o objeto correto
+     * @param activity Activity atrelada (MainActivity)
+     */
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -156,5 +203,7 @@ public class FragmentSearch extends Fragment {
             throw new ClassCastException();
         }
     }
+
+
 
 }
