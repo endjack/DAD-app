@@ -5,10 +5,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     >
+    <!--Header-->
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        app:cardCornerRadius="@dimen/cardview_compat_inset_shadow"
         app:elevation="10dp"
         style="@style/ThemeOverlay.AppCompat.Light">
 
@@ -33,153 +33,20 @@
                     android:textSize="20dp"
                     android:textStyle="bold"
                     android:textAlignment="center"/>
-
                 <TextView
-                    android:id="@+id/tvDetalhesFormacao"
+                    android:id="@+id/tvComponenteHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
-                    android:text="Formação"
-                    android:alpha="0.6"
+                    android:text="setor"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="12dp"
                     android:textAlignment="center"/>
 
             </LinearLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="20dp">
-        <!--Admissão-->
-        <android.support.v7.widget.CardView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            app:cardCornerRadius="@dimen/cardview_compat_inset_shadow"
-            app:elevation="10dp"
-            style="@style/ThemeOverlay.AppCompat.Light">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/fundoCinzaClaro"
-                android:orientation="horizontal">
-
-                <View
-                    android:layout_width="18px"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="10dp"
-                    android:background="@color/colorPrimary" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="10dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Admissão:"
-                        android:textColor="@android:color/black"
-                        android:textAlignment="textStart"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="data:"
-                        android:id="@+id/tvData"
-                        android:textAlignment="textStart"/>
-
-
-                </LinearLayout>
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-        <!--Setor-->
-        <android.support.v7.widget.CardView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            app:cardCornerRadius="@dimen/cardview_compat_inset_shadow"
-            app:elevation="10dp"
-            style="@style/ThemeOverlay.AppCompat.Light">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/fundoCinzaClaro"
-                android:orientation="horizontal">
-
-                <View
-                    android:layout_width="18px"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="10dp"
-                    android:background="@color/colorPrimary" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="10dp">
-
-                    <TextView
-                        android:id="@+id/tvDetalhesSetor"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Setor:"
-                        android:textColor="@android:color/black"
-                        android:textAlignment="textStart"/>
-
-                    <TextView
-                        android:id="@+id/tvSetor"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="setor"
-                        android:textAlignment="textStart"/>
-
-                    <!--android:shadowRadius="@android:integer/config_longAnimTime"/>-->
-
-                </LinearLayout>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-    </LinearLayout>
-
-    <!--Spinners-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginBottom="20dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:layout_weight="1"
-            android:textColor="@android:color/black"
-            android:text="Componente:"/>
-
-        <android.support.v7.widget.AppCompatSpinner
-            android:id="@+id/spinnerComp"
-            android:layout_width="0dp"
-            android:layout_height="25dp"
-            android:layout_weight="1.5"
-            android:textAlignment="center"
-            />
-
-    </LinearLayout>
-
-    <!--Gráficos-->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -188,6 +55,197 @@
             android:layout_width="match_parent"
             android:layout_height="240dp"
             android:orientation="vertical">
+
+            <!--Perfil-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="10dp">
+
+                <!--Setor-->
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    app:cardCornerRadius="@dimen/cardview_compat_inset_shadow"
+                    app:elevation="10dp"
+                    style="@style/ThemeOverlay.AppCompat.Light">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/fundoCinzaClaro"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="18px"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="10dp"
+                            android:background="@color/colorPrimary" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingLeft="10dp">
+
+                            <TextView
+                                android:id="@+id/tvDetalhesSetor"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Setor:"
+                                android:textColor="@android:color/black"
+                                android:textAlignment="textStart"/>
+
+                            <TextView
+                                android:id="@+id/tvSetor"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="setor"
+                                android:textSize="12dp"
+                                android:textAlignment="textStart"/>
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <!--Admissão-->
+                    <android.support.v7.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="5dp"
+                        app:cardCornerRadius="@dimen/cardview_compat_inset_shadow"
+                        app:elevation="10dp"
+                        style="@style/ThemeOverlay.AppCompat.Light">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/fundoCinzaClaro"
+                            android:orientation="horizontal">
+
+                            <View
+                                android:layout_width="18px"
+                                android:layout_height="40dp"
+                                android:layout_marginLeft="10dp"
+                                android:background="@color/colorPrimary" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:paddingLeft="10dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Admissão:"
+                                    android:textColor="@android:color/black"
+                                    android:textAlignment="textStart"/>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="data:"
+                                    android:id="@+id/tvData"
+                                    android:textSize="12dp"
+                                    android:textAlignment="textStart"/>
+
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                    <!--Formação-->
+                    <android.support.v7.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="5dp"
+                        app:cardCornerRadius="@dimen/cardview_compat_inset_shadow"
+                        app:elevation="10dp"
+                        style="@style/ThemeOverlay.AppCompat.Light">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/fundoCinzaClaro"
+                            android:orientation="horizontal">
+
+                            <View
+                                android:layout_width="18px"
+                                android:layout_height="40dp"
+                                android:layout_marginLeft="10dp"
+                                android:background="@color/colorPrimary" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:paddingLeft="10dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Formação:"
+                                    android:textColor="@android:color/black"
+                                    android:textAlignment="textStart"/>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="formacao:"
+                                    android:textSize="12dp"
+                                    android:id="@+id/tvDetalhesFormacao"
+                                    android:textAlignment="textStart"/>
+
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!--Spinners-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:text="Selecione o Componente Curricular:"/>
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/spinnerComp"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:textAlignment="center"
+                    style="@style/ThemeOverlay.AppCompat.Dark"
+                    />
+
+            </LinearLayout>
 
             <!--QtdDiscentes-->
             <LinearLayout

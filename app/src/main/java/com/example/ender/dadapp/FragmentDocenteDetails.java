@@ -45,17 +45,18 @@ public class FragmentDocenteDetails extends Fragment {
     private static final String POSTURA_PROFISSIONAL = "0xBJsn145s2SSk";
     private static final String ATUACAO_PROFISSIONAL = "0xJEsnU7P811";
 
-    Docente docente;
-    TextView tvDetalhesNome;
-    TextView tvDetalhesFormacao;
-    TextView tvSetor;
-    TextView tvData;
+    private Docente docente;
+    private TextView tvDetalhesNome;
+    private TextView tvDetalhesFormacao;
+    private TextView tvSetor;
+    private TextView tvComponenteHeader;
+    private TextView tvData;
     private BarChart chart1,chart2,chart3,chart4, chart5;
     private Retrofit retrofit;
     private int codeResponse;
     private List<Avaliacao> listaAvaliacoes;
-    Spinner compSpinner;
-    List<String> periodosLabel;
+    private Spinner compSpinner;
+    private List<String> periodosLabel;
 
 
     @Nullable
@@ -76,11 +77,12 @@ public class FragmentDocenteDetails extends Fragment {
 
         return view;
     }
-    private void inicializarObjetos(View view) {
+    public void inicializarObjetos(View view) {
         tvDetalhesNome = view.findViewById(R.id.tvDetalhesNome);
         tvDetalhesFormacao = view.findViewById(R.id.tvDetalhesFormacao);
         tvSetor = view.findViewById(R.id.tvSetor);
         tvData = view.findViewById(R.id.tvData);
+        tvComponenteHeader = view.findViewById(R.id.tvComponenteHeader);
         compSpinner = view.findViewById(R.id.spinnerComp);
         chart1 = view.findViewById(R.id.chart1);
         chart2 = view.findViewById(R.id.chart2);
@@ -90,7 +92,7 @@ public class FragmentDocenteDetails extends Fragment {
 
         docente = (Docente) getArguments().get("docente");
     }
-    public void carregarAvaliacao(String id_docente) {
+    private void carregarAvaliacao(String id_docente) {
         AvaliacaoService avalService = retrofit.create(AvaliacaoService.class);
         final Call<List<Avaliacao>> call = avalService.getAvaliacoes(id_docente);
 
@@ -144,6 +146,8 @@ public class FragmentDocenteDetails extends Fragment {
                 gerarGraficoMediaAprovados(gerarDados(idComponente,FragmentDocenteDetails.MEDIA_APROVADOS));
                 gerarGraficoPosturaProfissional(gerarDados(idComponente,FragmentDocenteDetails.POSTURA_PROFISSIONAL));
                 gerarGraficoAtuacaoProfissional(gerarDados(idComponente,FragmentDocenteDetails.ATUACAO_PROFISSIONAL));
+
+                tvComponenteHeader.setText(nomeComps.get(position).nome);
 
             }
 
@@ -445,7 +449,7 @@ public class FragmentDocenteDetails extends Fragment {
         tvSetor.setText(docente.unidade.lotacao);
 
         Date data = new Date(docente.data_admissao.getTime());
-        String dataFormatada = new SimpleDateFormat("dd-MM-yyyy").format(data);
+        String dataFormatada = new SimpleDateFormat("dd.MM.yyyy").format(data);
         tvData.setText(dataFormatada);
     }
 
