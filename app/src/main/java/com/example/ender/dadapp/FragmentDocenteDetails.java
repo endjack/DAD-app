@@ -228,6 +228,7 @@ public class FragmentDocenteDetails extends Fragment {
         BarDataSet barDataSet = new BarDataSet(dadosBar,"POR PERÍODO");
         barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         barDataSet.setBarShadowColor(Color.rgb(203,203,203));
+        barDataSet.setValueFormatter(new MyPorcentFormatter(MyPorcentFormatter.ONE_DECIMAL));
         barDataSet.setDrawValues(true);
 
         BarData barData = new BarData(barDataSet);
@@ -276,6 +277,7 @@ public class FragmentDocenteDetails extends Fragment {
         BarDataSet barDataSet = new BarDataSet(dadosBar,"POR PERÍODO");
         barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         barDataSet.setBarShadowColor(Color.rgb(203,203,203));
+        barDataSet.setValueFormatter(new MyPorcentFormatter(MyPorcentFormatter.NO_DECIMALS));
         barDataSet.setDrawValues(true);
 
         BarData barData = new BarData(barDataSet);
@@ -324,6 +326,7 @@ public class FragmentDocenteDetails extends Fragment {
         BarDataSet barDataSet = new BarDataSet(dadosBar,"POR PERÍODO");
         barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         barDataSet.setBarShadowColor(Color.rgb(203,203,203));
+        barDataSet.setValueFormatter(new MyPorcentFormatter(MyPorcentFormatter.TWO_DECIMAL));
         barDataSet.setDrawValues(true);
 
         BarData barData = new BarData(barDataSet);
@@ -372,6 +375,7 @@ public class FragmentDocenteDetails extends Fragment {
         BarDataSet barDataSet = new BarDataSet(dadosBar,"POR PERÍODO");
         barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         barDataSet.setBarShadowColor(Color.rgb(203,203,203));
+        barDataSet.setValueFormatter(new MyPorcentFormatter(MyPorcentFormatter.TWO_DECIMAL));
         barDataSet.setDrawValues(true);
 
         BarData barData = new BarData(barDataSet);
@@ -424,12 +428,13 @@ public class FragmentDocenteDetails extends Fragment {
         BarDataSet barDataSet = new BarDataSet(dadosBar,"POR PERÍODO");
         barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         barDataSet.setBarShadowColor(Color.rgb(203,203,203));
+        barDataSet.setValueFormatter(new MyPorcentFormatter(MyPorcentFormatter.PORCENT));
         barDataSet.setDrawValues(true);
 
         BarData barData = new BarData(barDataSet);
         barData.setBarWidth(0.5f);
-        chart5.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xLabels));
         chart5.setDrawGridBackground(false);
+        chart5.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xLabels));
         chart5.invalidate();
         chart5.setData(barData);
 

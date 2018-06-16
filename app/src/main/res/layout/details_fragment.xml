@@ -246,7 +246,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1.5"
                     android:paddingLeft="10dp"
-                    android:text="Aprovados - %"
+                    android:text="Aprovados"
                     android:textAlignment="textStart"
                     android:textColor="@android:color/black"
                     android:textSize="18dp" />
