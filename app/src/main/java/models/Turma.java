@@ -1,22 +1,32 @@
 package models;
 
-public class Turma {
+import java.io.Serializable;
 
-    public Integer id;
+public class Turma implements Serializable{
+
+    public Integer id_turma;
     public String ano;
     public String nivel;
     public String periodo;
-    public ComponenteCurricular componenteCurricular;
+    public ComponenteCurricular componente;
 
     public Turma() {
     }
 
-    public Integer getId() {
-        return id;
+    public Turma(Integer id_turma, String ano, String nivel, String periodo, ComponenteCurricular componente) {
+        this.id_turma = id_turma;
+        this.ano = ano;
+        this.nivel = nivel;
+        this.periodo = periodo;
+        this.componente = componente;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Integer getId_turma() {
+        return id_turma;
+    }
+
+    public void setId_turma(Integer id_turma) {
+        this.id_turma = id_turma;
     }
 
     public String getAno() {
@@ -43,11 +53,10 @@ public class Turma {
         this.periodo = periodo;
     }
 
-    public ComponenteCurricular getComponenteCurricular() {
-        return componenteCurricular;
+    public ComponenteCurricular getComponente() {
+        return componente;
     }
-
-    public void setComponenteCurricular(ComponenteCurricular componenteCurricular) {
-        this.componenteCurricular = componenteCurricular;
+    public void setComponente(ComponenteCurricular componente) {
+        this.componente = componente;
     }
 }

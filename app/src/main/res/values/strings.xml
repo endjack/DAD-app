@@ -2,6 +2,7 @@
     <string name="app_name">DadApp</string>
 
     <string-array name="listAnos">
+        <item>Geral</item>
         <item>2014</item>
         <item>2015</item>
         <item>2016</item>

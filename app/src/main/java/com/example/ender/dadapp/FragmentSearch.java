@@ -14,17 +14,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import adapters.SearchResultsListAdapter;
+import api.AvaliacaoService;
 import api.DocenteDeserializable;
 import api.DocenteService;
+import models.Avaliacao;
 import models.Docente;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,40 +45,72 @@ public class FragmentSearch extends Fragment {
     private SearchResultsListAdapter searchResultsListAdapter;
     private Retrofit retrofit;
     private EditText edtBuscar;
+    private TextView tvInfo;
     private Button bttBuscar;
     private DetalharDocenteListener listener;
     private String ultimaPesquisa="";
+    private ProgressBar progressBarTop;
+    private String nome;
+    private int codeResponse;
+    private volatile boolean isRunning = false;
+    private String msgError;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.buscar_fragment, container,false );
 
-        Gson gson = new GsonBuilder().registerTypeAdapter(Docente.class, new DocenteDeserializable()).create();
+        //Gson gson = new GsonBuilder().registerTypeAdapter(Docente.class, new DocenteDeserializable()).create();
         retrofit = new Retrofit.Builder()
                 .baseUrl(DocenteService.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
 
         edtBuscar = view.findViewById(R.id.edtBuscar);
         bttBuscar = view.findViewById(R.id.bttBuscar);
+        progressBarTop = view.findViewById(R.id.progressBar);
+        tvInfo = view.findViewById(R.id.tvInfo);
+        exibirInfo(false);
+
 
         recyclerView = view.findViewById(R.id.recycler_view_results);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        exibirProgressBar(false);
 
         bttBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ultimaPesquisa = edtBuscar.getText().toString();
-                Toast.makeText(getActivity(), ultimaPesquisa, Toast.LENGTH_SHORT).show();
-                carregarTodosDocentes();
-
+                nome = edtBuscar.getText().toString();
+                if(!nome.isEmpty()){
+                    ultimaPesquisa = nome;
+                    carregarTodosDocentes(nome);
+                }else{
+                    tvInfo.setText("Consulta vazia, digite nome");
+                    exibirInfo(true);
+                }
             }
         });
 
         return view;
+    }
+
+    /**
+     * Exibe ou não o progressBar na tela
+     * @param exibir Booleano para definir exibir ou não
+     */
+    private void exibirProgressBar(boolean exibir) {
+        progressBarTop.setVisibility(exibir ? View.VISIBLE : View.GONE);
+        recyclerView.setVisibility(exibir ? View.GONE : View.VISIBLE);
+    }
+
+    /**
+     * Exibe ou não a Informação de RenponseHTTP na tela
+     * @param exibir Booleano para definir exibir ou não
+     */
+    private void exibirInfo(boolean exibir) {
+        tvInfo.setVisibility(exibir ? View.VISIBLE : View.GONE);
     }
 
     /**
@@ -106,81 +145,100 @@ public class FragmentSearch extends Fragment {
                 //fazer nada
             }else{
                 edtBuscar.setText(savedInstanceState.getString("ultimaPesquisa"));
-                carregarTodosDocentes();
+                //carregarTodosDocentes(ultimaPesquisa);
             }
         }
 
     }
 
     /**
-     * Faz uma chamada ao Service de Docentes e recebe um Docente pesquisa por nome.
-     * @param nome Nome do Docente pesquisado na EditText
-     */
-    public void carregarDadosDocente(String nome) {
-        DocenteService docenteService = retrofit.create(DocenteService.class);
-        Call<Docente> call = docenteService.getDocente(nome);
-
-        call.enqueue(new Callback<Docente>() {
-            @Override
-            public void onResponse(Call<Docente> call, Response<Docente> response) {
-
-                if (response.body() != null) {
-                    //tvResultado.setText(response.body().nome + " - " + response.body().formacao);
-                }else if(response.code() == 500){
-                    //tvResultado.setText("Não encontrado!");
-                }else{
-                    Toast.makeText(getActivity(), "Favor inserir nome!", Toast.LENGTH_SHORT).show();
-                    //tvResultado.setText("Digite Nome");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Docente> call, Throwable t) {
-                Toast.makeText(getActivity(), "Não foi possível carregar os Dados!", Toast.LENGTH_SHORT).show();
-                // tvResultado.setText("Digite Nome");
-            }
-        });
-
-    }
-
-    /**
      * Faz uma chamada ao Service de Docentes e recebe uma lista com todos os Docentes.
      */
-    public void carregarTodosDocentes() {
+    public void carregarTodosDocentes(String nome) {
         DocenteService docenteService = retrofit.create(DocenteService.class);
-        final Call<List<Docente>> call = docenteService.getDocentes();
-        final Handler handler = new Handler(Looper.getMainLooper());
+        final Call<List<Docente>> call = docenteService.getDocentes(nome);
 
+
+
+        final Handler handler = new Handler(Looper.getMainLooper());
         new Thread(new Runnable() {
             List<Docente> listaDocentes;
             @Override
             public void run() {
-
-                try {
-                    listaDocentes = call.execute().body();
-
-                    if(listaDocentes != null){
+                isRunning = true;
+                    try {
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
-                                searchResultsListAdapter = new SearchResultsListAdapter(getActivity(), listaDocentes, new SearchResultsListAdapter.ItemDetailsListener() {
+                                exibirProgressBar(true);
+                            }
+                        });
+                        //listaDocentes = call.execute().body();
+
+                        listaDocentes = call.execute().body();
+
+
+                        Log.i("TAG_RESPONSE","Code Response: "+listaDocentes);
+
+                        if(codeResponse == 400){
+                            isRunning = false;
+
+                        }
+
+                        if(isRunning) {
+                            //listaDocentes = (List<Docente>) response.body();
+
+
+                                handler.post(new Runnable() {
                                     @Override
-                                    public void onDetailsClick(Docente docente) {
-                                       listener.detalharDocente(docente);
+                                    public void run() {
+
+                                        if (!listaDocentes.isEmpty()) {
+                                            searchResultsListAdapter = new SearchResultsListAdapter(getActivity(),
+                                                    listaDocentes, new SearchResultsListAdapter.ItemDetailsListener() {
+                                                @Override
+                                                public void onDetailsClick(Docente docente) {
+                                                    listener.detalharDocente(docente);
+                                                }
+                                            });
+
+                                            recyclerView.setAdapter(searchResultsListAdapter);
+                                            exibirProgressBar(false);
+                                            exibirInfo(false);
+                                        }else {
+
+                                            searchResultsListAdapter = new SearchResultsListAdapter(getActivity(), listaDocentes, null);
+                                            searchResultsListAdapter.notifyDataSetChanged();
+
+                                            tvInfo.setText("Sem resultados");
+                                            exibirProgressBar(false);
+                                            exibirInfo(true);
+                                            isRunning = false;
+                                            return;
+                                        }
+
+
                                     }
                                 });
 
-                                recyclerView.setAdapter(searchResultsListAdapter);
+                        }else{
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    exibirProgressBar(false);
+                                    Toast.makeText(getActivity(), "Servidor off-line", Toast.LENGTH_SHORT).show();
+                                }
+                            });
 
-                            }
-                        });
+                            return;
+                        }
 
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             }
         }).start();
+
     }
 
     /**

@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class Docente implements Serializable{
 
-    public Integer id;
+    public Integer id_docente;
     public String nome;
     public String formacao;
     public Unidade unidade;
@@ -17,19 +17,19 @@ public class Docente implements Serializable{
     }
 
     public Docente(Integer id, String nome, String formacao, Unidade unidade, Date data_admissao) {
-        this.id = id;
+        this.id_docente = id;
         this.nome = nome;
         this.formacao = formacao;
         this.unidade = unidade;
         this.data_admissao = data_admissao;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getId_docente() {
+        return id_docente;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId_docente(Integer id_docente) {
+        this.id_docente = id_docente;
     }
 
     public String getNome() {

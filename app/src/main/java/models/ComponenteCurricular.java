@@ -1,24 +1,33 @@
 package models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ComponenteCurricular {
+public class ComponenteCurricular implements Serializable{
 
-    public Integer id;
+    public Integer id_componente;
     public String codigo;
-    public String nomeComponenteCurricular;
+    public String nome;
     public Unidade unidade;
     public List<Turma> turmas;
 
     public ComponenteCurricular() {
     }
 
-    public Integer getId() {
-        return id;
+    public ComponenteCurricular(Integer id_componente, String codigo, String nome, Unidade unidade, List<Turma> turmas) {
+        this.id_componente = id_componente;
+        this.codigo = codigo;
+        this.nome = nome;
+        this.unidade = unidade;
+        this.turmas = turmas;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Integer getId_componente() {
+        return id_componente;
+    }
+
+    public void setId_componente(Integer id_componente) {
+        this.id_componente = id_componente;
     }
 
     public String getCodigo() {
@@ -29,12 +38,12 @@ public class ComponenteCurricular {
         this.codigo = codigo;
     }
 
-    public String getNomeComponenteCurricular() {
-        return nomeComponenteCurricular;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNomeComponenteCurricular(String nomeComponenteCurricular) {
-        this.nomeComponenteCurricular = nomeComponenteCurricular;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public Unidade getUnidade() {
@@ -51,5 +60,10 @@ public class ComponenteCurricular {
 
     public void setTurmas(List<Turma> turmas) {
         this.turmas = turmas;
+    }
+
+    @Override
+    public String toString() {
+        return nome;
     }
 }

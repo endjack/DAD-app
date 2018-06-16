@@ -25,24 +25,24 @@ public class FragmentRatings extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.ratings_fragment, container,false);
 
-        btnCard1 = view.findViewById(R.id.btnCard1);
-        btnCard2 = view.findViewById(R.id.btnCard2);
-        btnCard3 = view.findViewById(R.id.btnCard3);
-        btnCard4 = view.findViewById(R.id.btnCard4);
-
-        spinnerAnos = view.findViewById(R.id.spinnerAnos);
-        spinnerAnos.setBackgroundColor(0xFFf5f5f5);
-
-
-
-        CharSequence[] listaAnos = getResources().getTextArray(R.array.listAnos);
-
-
-        ArrayAdapter<CharSequence> adapter= new ArrayAdapter<>(spinnerAnos.getContext(), R.layout.spinner_layout_item, listaAnos);
-        adapter.setDropDownViewResource(R.layout.spinner_layout_dropdown);
-
-        spinnerAnos.setAdapter(adapter);
-        spinnerAnos.setSelection(listaAnos.length-1);
+//        btnCard1 = view.findViewById(R.id.btnCard1);
+//        btnCard2 = view.findViewById(R.id.btnCard2);
+//        btnCard3 = view.findViewById(R.id.btnCard3);
+//        btnCard4 = view.findViewById(R.id.btnCard4);
+//
+//        spinnerAnos = view.findViewById(R.id.spinnerAnos);
+//        spinnerAnos.setBackgroundColor(0xFFf5f5f5);
+//
+//
+//
+//        CharSequence[] listaAnos = getResources().getTextArray(R.array.listAnos);
+//
+//
+//        ArrayAdapter<CharSequence> adapter= new ArrayAdapter<>(spinnerAnos.getContext(), R.layout.spinner_layout_item, listaAnos);
+//        adapter.setDropDownViewResource(R.layout.spinner_layout_dropdown);
+//
+//        spinnerAnos.setAdapter(adapter);
+//        spinnerAnos.setSelection(listaAnos.length-1);
 
         return view;
     }

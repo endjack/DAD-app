@@ -12,9 +12,9 @@ import java.lang.reflect.Type;
 
 import models.Docente;
 
-public class DocenteDeserializable implements JsonDeserializer<Object> {
+public class DocenteDeserializable implements JsonDeserializer<Docente> {
     @Override
-    public Object deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public Docente deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonElement element = json.getAsJsonObject();
         Log.i("LOG-RESULTS", "JSON DE ENTRADA --> "+element.toString());
 

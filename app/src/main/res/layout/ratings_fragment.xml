@@ -30,22 +30,22 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="wrap_content"
-            android:text="Selecione Ano:"
+            android:text="Conheça os dados:"
             android:paddingLeft="10dp"
             android:textColor="@android:color/black"/>
 
-        <android.support.v7.widget.AppCompatSpinner
-            android:id="@+id/spinnerAnos"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textAlignment="center"
-            android:theme="@style/mySpinner" />
+        <!--<android.support.v7.widget.AppCompatSpinner-->
+            <!--android:id="@+id/spinnerAnos"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:textAlignment="center"-->
+            <!--android:theme="@style/mySpinner" />-->
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+        <!--<View-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="1"/>-->
     </LinearLayout>
 
     <ScrollView
@@ -87,25 +87,16 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Melhor Média de Postura Profissional"
+                                android:text="Média de Postura Profissional"
                                 android:textColor="@android:color/black"
                                 android:textSize="10pt" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Uma descrição" />
+                                android:text="Média da postura profissional do docente." />
 
-                            <Button
-                                android:id="@+id/btnCard1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="30dp"
-                                android:layout_gravity="end"
-                                android:layout_marginRight="10dp"
-                                android:background="@drawable/button_radius"
-                                android:text="Detalhar"
-                                android:textAllCaps="false"
-                                android:textColor="@android:color/white" />
+
                             <!--android:shadowRadius="@android:integer/config_longAnimTime"/>-->
 
                         </LinearLayout>
@@ -141,25 +132,16 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Pior Média de Postura Profissional"
+                                android:text="Média de Atuação Profissional"
                                 android:textColor="@android:color/black"
                                 android:textSize="10pt" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Uma descrição" />
+                                android:text="Média da atuação profissional do docente" />
 
-                            <Button
-                                android:id="@+id/btnCard2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="30dp"
-                                android:layout_gravity="end"
-                                android:layout_marginRight="10dp"
-                                android:background="@drawable/button_radius"
-                                android:text="Detalhar"
-                                android:textAllCaps="false"
-                                android:textColor="@android:color/white" />
+
                             <!--android:shadowRadius="@android:integer/config_longAnimTime"/>-->
 
                         </LinearLayout>
@@ -201,7 +183,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="10pt"
-                        android:text="Melhor Média de Atuação Profissional"
+                        android:text="Média dos Alunos Aprovados"
                         android:textColor="@android:color/black"/>
 
                     <TextView
@@ -209,16 +191,7 @@
                         android:layout_height="wrap_content"
                         android:text="Uma descrição"/>
 
-                    <Button
-                        android:id="@+id/btnCard3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:text="Detalhar"
-                        android:layout_marginRight="10dp"
-                        android:layout_gravity="end"
-                        android:textColor="@android:color/white"
-                        android:background="@drawable/button_radius"
-                        android:textAllCaps="false"/>
+
                     <!--android:shadowRadius="@android:integer/config_longAnimTime"/>-->
 
                 </LinearLayout>
@@ -255,25 +228,16 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="10pt"
-                        android:text="Pior Média de Atuação Profissional"
-                        android:textColor="@android:color/black"/>
+                        android:text="Média da Autoavaliação do Aluno"
+                        android:textColor="@android:color/black"
+                        android:textSize="10pt" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Uma descrição"/>
 
-                    <Button
-                        android:id="@+id/btnCard4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:text="Detalhar"
-                        android:layout_marginRight="10dp"
-                        android:layout_gravity="end"
-                        android:textColor="@android:color/white"
-                        android:background="@drawable/button_radius"
-                        android:textAllCaps="false"/>
+
                     <!--android:shadowRadius="@android:integer/config_longAnimTime"/>-->
 
                 </LinearLayout>
