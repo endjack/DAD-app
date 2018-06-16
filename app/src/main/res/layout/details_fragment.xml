@@ -5,12 +5,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     >
-
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="80dp"
         app:cardCornerRadius="@dimen/cardview_compat_inset_shadow"
-        app:elevation="10dp">
+        app:elevation="10dp"
+        style="@style/ThemeOverlay.AppCompat.Light">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -43,9 +43,6 @@
                     android:alpha="0.6"
                     android:textAlignment="center"/>
 
-
-                <!--android:shadowRadius="@android:integer/config_longAnimTime"/>-->
-
             </LinearLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
@@ -53,8 +50,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp">
+        <!--Admissão-->
         <android.support.v7.widget.CardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -63,7 +61,8 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
             app:cardCornerRadius="@dimen/cardview_compat_inset_shadow"
-            app:elevation="10dp">
+            app:elevation="10dp"
+            style="@style/ThemeOverlay.AppCompat.Light">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -86,18 +85,22 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="formacao:"
-                        android:paddingLeft="10dp"
+                        android:text="Admissão:"
                         android:textColor="@android:color/black"
+                        android:textAlignment="textStart"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="data:"
+                        android:id="@+id/tvData"
                         android:textAlignment="textStart"/>
 
 
-                    <!--android:shadowRadius="@android:integer/config_longAnimTime"/>-->
-
                 </LinearLayout>
             </LinearLayout>
-        </android.support.v7.widget.CardView>
 
+        </android.support.v7.widget.CardView>
+        <!--Setor-->
         <android.support.v7.widget.CardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -106,7 +109,8 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
             app:cardCornerRadius="@dimen/cardview_compat_inset_shadow"
-            app:elevation="10dp">
+            app:elevation="10dp"
+            style="@style/ThemeOverlay.AppCompat.Light">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -131,8 +135,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Setor:"
-                        android:paddingLeft="10dp"
                         android:textColor="@android:color/black"
+                        android:textAlignment="textStart"/>
+
+                    <TextView
+                        android:id="@+id/tvSetor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="setor"
                         android:textAlignment="textStart"/>
 
                     <!--android:shadowRadius="@android:integer/config_longAnimTime"/>-->
@@ -140,7 +150,6 @@
                 </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
-
     </LinearLayout>
 
     <!--Spinners-->
@@ -149,12 +158,15 @@
         android:orientation="horizontal"
         android:layout_height="wrap_content"
         android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp">
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="20dp">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:textSize="18dp"
+            android:layout_weight="1"
+            android:textColor="@android:color/black"
             android:text="Componente:"/>
 
         <android.support.v7.widget.AppCompatSpinner
@@ -163,59 +175,249 @@
             android:layout_height="25dp"
             android:layout_weight="1.5"
             android:textAlignment="center"
-            android:theme="@style/mySpinner" />
-
+            />
 
     </LinearLayout>
 
-    <!--Gráficos e Pizzas-->
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="5dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.5"
-            android:text="Média dos Aprovados"
-            android:textSize="18dp"
-            android:textColor="@android:color/black"
-            android:textAlignment="textStart"
-            android:paddingLeft="10dp"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:textAlignment="textEnd"
-            android:paddingRight="10dp"
-            android:text="info"/>
-    </LinearLayout>
+    <!--Gráficos-->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-            <android.support.v7.widget.CardView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:orientation="vertical">
+
+            <!--QtdDiscentes-->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:paddingLeft="10dp"
+                    android:text="Quantidade de Alunos"
+                    android:textAlignment="textStart"
+                    android:textColor="@android:color/black"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:paddingRight="10dp"
+                    android:text="info"
+                    android:textAlignment="textEnd" />
+            </LinearLayout>
+            <android.support.v7.widget.CardView
+                style="@style/ThemeOverlay.AppCompat.Light"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="240dp">
+                    android:layout_height="150dp">
 
                     <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/chart2"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/chart1">
-                    </com.github.mikephil.charting.charts.BarChart>
+                        android:layout_height="match_parent"></com.github.mikephil.charting.charts.BarChart>
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
+
+            <!--Aprovados-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:paddingLeft="10dp"
+                    android:text="Aprovados - %"
+                    android:textAlignment="textStart"
+                    android:textColor="@android:color/black"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:paddingRight="10dp"
+                    android:text="info"
+                    android:textAlignment="textEnd" />
+            </LinearLayout>
+            <android.support.v7.widget.CardView
+                style="@style/ThemeOverlay.AppCompat.Light"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp">
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/chart5"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"></com.github.mikephil.charting.charts.BarChart>
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <!--Média dos Aprovados-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:paddingLeft="10dp"
+                    android:text="Média dos Aprovados"
+                    android:textAlignment="textStart"
+                    android:textColor="@android:color/black"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:paddingRight="10dp"
+                    android:text="info"
+                    android:textAlignment="textEnd" />
+            </LinearLayout>
+            <android.support.v7.widget.CardView
+                style="@style/ThemeOverlay.AppCompat.Light"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp">
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/chart1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"></com.github.mikephil.charting.charts.BarChart>
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <!--Postura Profissional-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:paddingLeft="10dp"
+                    android:text="Postura Profissional"
+                    android:textAlignment="textStart"
+                    android:textColor="@android:color/black"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:paddingRight="10dp"
+                    android:text="info"
+                    android:textAlignment="textEnd" />
+            </LinearLayout>
+            <android.support.v7.widget.CardView
+                style="@style/ThemeOverlay.AppCompat.Light"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp">
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/chart3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"></com.github.mikephil.charting.charts.BarChart>
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <!--Atuação Profissional-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:paddingLeft="10dp"
+                    android:text="Atuação Profissional"
+                    android:textAlignment="textStart"
+                    android:textColor="@android:color/black"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:paddingRight="10dp"
+                    android:text="info"
+                    android:textAlignment="textEnd" />
+            </LinearLayout>
+            <android.support.v7.widget.CardView
+                style="@style/ThemeOverlay.AppCompat.Light"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp">
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/chart4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"></com.github.mikephil.charting.charts.BarChart>
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
 
     </ScrollView>
 
