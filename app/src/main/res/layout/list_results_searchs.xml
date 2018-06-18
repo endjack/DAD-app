@@ -9,22 +9,27 @@
     >
 
     <LinearLayout
-        android:id="@+id/linearInterno"
-        android:layout_width="match_parent"
+        android:id="@+id/linearInterno"        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ImageView
+        <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="62dp"
-            android:layout_weight="0.7"
-            android:src="@drawable/teacher2"
-            android:layout_marginLeft="5dp"
-            android:alpha="0.9"/>
+            android:layout_marginLeft="3dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_centerInParent="true"
+                android:alpha="0.9"
+                android:src="@drawable/teacher2" />
+        </RelativeLayout>
+
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="3"
             android:orientation="vertical"
             android:paddingLeft="5dp">
@@ -34,42 +39,42 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nome Professor"
-                android:textSize="22dp"
                 android:textColor="@android:color/black"
-                />
+                android:textSize="15dp" />
 
             <TextView
                 android:id="@+id/tvResultadoSetor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Setor IMD"
-                android:textSize="18dp"
-                />
+                android:textSize="12dp" />
 
 
         </LinearLayout>
+
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="0.7">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="?android:fromId"
-                android:src="@drawable/ic_action_gear"
-                android:layout_centerInParent="true"/>
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/seta_more"
+                android:alpha="0.7"/>
 
         </RelativeLayout>
 
     </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/colorPrimary"
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp"
-            android:alpha="0.4"
-            />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorPrimary"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:alpha="0.4"
+        />
 
 </LinearLayout>

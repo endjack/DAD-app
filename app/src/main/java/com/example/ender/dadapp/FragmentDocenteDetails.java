@@ -28,6 +28,7 @@ import java.util.Date;
 import java.util.List;
 
 import api.AvaliacaoService;
+import api.ConfigAPI;
 import models.Avaliacao;
 import models.ComponenteCurricular;
 import models.Docente;
@@ -66,7 +67,7 @@ public class FragmentDocenteDetails extends Fragment {
 
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(AvaliacaoService.BASE_URL)
+                .baseUrl(ConfigAPI.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

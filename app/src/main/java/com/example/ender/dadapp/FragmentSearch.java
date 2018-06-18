@@ -29,6 +29,7 @@ import java.util.Map;
 
 import adapters.SearchResultsListAdapter;
 import api.AvaliacaoService;
+import api.ConfigAPI;
 import api.DocenteDeserializable;
 import api.DocenteService;
 import models.Avaliacao;
@@ -62,7 +63,7 @@ public class FragmentSearch extends Fragment {
 
         //Gson gson = new GsonBuilder().registerTypeAdapter(Docente.class, new DocenteDeserializable()).create();
         retrofit = new Retrofit.Builder()
-                .baseUrl(DocenteService.BASE_URL)
+                .baseUrl(ConfigAPI.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

@@ -6,6 +6,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.io.Serializable;
 import java.util.List;
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements FragmentSearch.De
                                 .commit();
                         break;
                     case R.id.sobreItem:
-                        FragmentMain fragmentSobre = new FragmentMain();
+                        FragmentAbout fragmentSobre = new FragmentAbout();
                         getFragmentManager()
                                 .beginTransaction()
                                 .replace(R.id.frame_layout,fragmentSobre)
@@ -95,4 +96,5 @@ public class MainActivity extends AppCompatActivity implements FragmentSearch.De
                 .addToBackStack(fragmentDocenteDetails.getClass().toString())
                 .commit();
     }
+
 }

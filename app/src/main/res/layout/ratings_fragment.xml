@@ -87,11 +87,12 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Média de Postura Profissional"
+                                android:text="Postura Profissional?"
                                 android:textColor="@android:color/black"
                                 android:textSize="10pt" />
 
                             <TextView
+                                android:id="@+id/descricaoPostura"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Média da postura profissional do docente." />
@@ -117,11 +118,11 @@
                         android:background="@color/fundoCinzaClaro"
                         android:orientation="horizontal">
 
-                        <View
+                        r<View
                             android:layout_width="18px"
                             android:layout_height="90dp"
                             android:layout_marginLeft="10dp"
-                            android:background="@color/fundoVermelhorLogo" />
+                            android:background="@color/colorPrimary" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -132,11 +133,12 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Média de Atuação Profissional"
+                                android:text="Atuação Profissional?"
                                 android:textColor="@android:color/black"
                                 android:textSize="10pt" />
 
                             <TextView
+                                android:id="@+id/descricaoAtuacao"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Média da atuação profissional do docente" />
@@ -151,6 +153,8 @@
 
 
                 </android.support.v7.widget.CardView>
+
+
             <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -169,9 +173,8 @@
                 <View
                     android:layout_width="18px"
                     android:layout_height="90dp"
-                    android:background="@color/colorPrimary"
                     android:layout_marginLeft="10dp"
-                    />
+                    android:background="@color/colorPrimary" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -182,57 +185,12 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="10pt"
-                        android:text="Média dos Alunos Aprovados"
-                        android:textColor="@android:color/black"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Uma descrição"/>
-
-
-                    <!--android:shadowRadius="@android:integer/config_longAnimTime"/>-->
-
-                </LinearLayout>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            app:elevation="10dp"
-            app:cardCornerRadius="@dimen/cardview_compat_inset_shadow">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@color/fundoCinzaClaro">
-
-                <View
-                    android:layout_width="18px"
-                    android:layout_height="90dp"
-                    android:background="@color/fundoVermelhorLogo"
-                    android:layout_marginLeft="10dp"
-                    />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="10dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Média da Autoavaliação do Aluno"
+                        android:text="Autoavaliação do Aluno?"
                         android:textColor="@android:color/black"
                         android:textSize="10pt" />
 
                     <TextView
+                        android:id="@+id/descricaoAutoAvaliacao"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Uma descrição"/>
