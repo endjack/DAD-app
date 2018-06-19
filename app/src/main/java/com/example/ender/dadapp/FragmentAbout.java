@@ -29,7 +29,6 @@ public class FragmentAbout extends Fragment {
         edtVersao = view.findViewById(R.id.edtVersao);
         edtVersao.setEnabled(false);
 
-
         return view;
     }
 

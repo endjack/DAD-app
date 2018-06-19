@@ -46,10 +46,11 @@
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
-
-    <ScrollView
+    <com.amar.library.ui.StickyScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:stickyHeader="@id/llDadosGerais">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,7 +62,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="10dp"
+                android:elevation="3dp"
+                android:background="@android:color/white">
 
                 <!--Setor-->
                 <android.support.v7.widget.CardView
@@ -117,6 +120,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:layout_marginBottom="5dp"
                     >
                     <!--Admissão-->
                     <android.support.v7.widget.CardView
@@ -222,14 +226,270 @@
 
             </LinearLayout>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dados Gerais:"
+                android:textColor="@android:color/black"
+                android:layout_marginLeft="20dp"/>
+
+            <!--Média Geral-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:elevation="3dp"
+                android:background="@android:color/white"
+                android:id="@+id/llDadosGerais">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+                    <!---->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <!--Dados gerais-->
+                        <android.support.v7.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="5dp"
+                            app:cardCornerRadius="@dimen/cardview_compat_inset_shadow"
+                            app:elevation="10dp"
+                            style="@style/ThemeOverlay.AppCompat.Light">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/fundoCinzaClaro"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="18px"
+                                    android:layout_height="40dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:background="@color/fundoVermelhorLogo" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:paddingLeft="10dp">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="Aprovados:"
+                                        android:textColor="@android:color/black"
+                                        android:textAlignment="textStart"/>
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="tvGeralAprovados:"
+                                        android:id="@+id/tvGeralAprovados"
+                                        android:textSize="12dp"
+                                        android:textAlignment="textStart"/>
+
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                        </android.support.v7.widget.CardView>
+
+
+                        <!--Formação-->
+                        <android.support.v7.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="5dp"
+                            app:cardCornerRadius="@dimen/cardview_compat_inset_shadow"
+                            app:elevation="10dp"
+                            style="@style/ThemeOverlay.AppCompat.Light">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/fundoCinzaClaro"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="18px"
+                                    android:layout_height="40dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:background="@color/fundoVermelhorLogo" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:paddingLeft="10dp">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="Média dos Aprovados:"
+                                        android:textColor="@android:color/black"
+                                        android:textAlignment="textStart"/>
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="tvGeralMediaAprovados:"
+                                        android:textSize="12dp"
+                                        android:id="@+id/tvGeralMediaAprovados"
+                                        android:textAlignment="textStart"/>
+
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                        </android.support.v7.widget.CardView>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="10dp">
+
+                    <!---->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <!--Dados gerais-->
+                        <android.support.v7.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="5dp"
+                            app:cardCornerRadius="@dimen/cardview_compat_inset_shadow"
+                            app:elevation="10dp"
+                            style="@style/ThemeOverlay.AppCompat.Light">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/fundoCinzaClaro"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="18px"
+                                    android:layout_height="40dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:background="@color/fundoVermelhorLogo" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:paddingLeft="10dp">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="Postura Profissional:"
+                                        android:textColor="@android:color/black"
+                                        android:textAlignment="textStart"/>
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="tvGeralPosturaProf:"
+                                        android:id="@+id/tvGeralPosturaProf"
+                                        android:textSize="12dp"
+                                        android:textAlignment="textStart"/>
+
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                        </android.support.v7.widget.CardView>
+
+
+                        <!--Formação-->
+                        <android.support.v7.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="5dp"
+                            app:cardCornerRadius="@dimen/cardview_compat_inset_shadow"
+                            app:elevation="10dp"
+                            style="@style/ThemeOverlay.AppCompat.Light">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/fundoCinzaClaro"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="18px"
+                                    android:layout_height="40dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:background="@color/fundoVermelhorLogo" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:paddingLeft="10dp">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="Atuação Profissional:"
+                                        android:textColor="@android:color/black"
+                                        android:textAlignment="textStart"/>
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="tvGeralAtuacaoProf:"
+                                        android:textSize="12dp"
+                                        android:id="@+id/tvGeralAtuacaoProf"
+                                        android:textAlignment="textStart"/>
+
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                        </android.support.v7.widget.CardView>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
             <!--Spinners-->
             <LinearLayout
+                android:id="@+id/llSpinner"
                 android:layout_width="match_parent"
                 android:orientation="vertical"
                 android:layout_height="wrap_content"
+                android:gravity="top"
                 android:layout_marginRight="15dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="15dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -264,13 +524,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="18dp" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:paddingRight="10dp"
-                    android:text="info"
-                    android:textAlignment="textEnd" />
+
             </LinearLayout>
             <android.support.v7.widget.CardView
                 style="@style/ThemeOverlay.AppCompat.Light"
@@ -309,13 +563,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="18dp" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:paddingRight="10dp"
-                    android:text="info"
-                    android:textAlignment="textEnd" />
+
             </LinearLayout>
             <android.support.v7.widget.CardView
                 style="@style/ThemeOverlay.AppCompat.Light"
@@ -357,13 +605,6 @@
                     android:textColor="@android:color/black"
                     android:textSize="18dp" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:paddingRight="10dp"
-                    android:text="info"
-                    android:textAlignment="textEnd" />
             </LinearLayout>
             <android.support.v7.widget.CardView
                 style="@style/ThemeOverlay.AppCompat.Light"
@@ -403,6 +644,7 @@
                     android:textSize="18dp" />
 
                 <TextView
+                    android:id="@+id/dpPostura"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
@@ -448,6 +690,7 @@
                     android:textSize="18dp" />
 
                 <TextView
+                    android:id="@+id/dpAtuacao"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
@@ -477,6 +720,6 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </com.amar.library.ui.StickyScrollView>
 
 </LinearLayout>

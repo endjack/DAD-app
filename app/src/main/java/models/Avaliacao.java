@@ -14,6 +14,7 @@ public class Avaliacao implements Serializable {
     public Double atuacao_profissional_DP;
     public Double media_aprovados;
     public Double aprovados;
+    int count = 0;
 
     public Avaliacao() {
     }
@@ -29,6 +30,7 @@ public class Avaliacao implements Serializable {
         this.atuacao_profissional_DP = atuacao_profissional_DP;
         this.media_aprovados = media_aprovados;
         this.aprovados = aprovados;
+
     }
 
     public Integer getId() {
@@ -109,5 +111,13 @@ public class Avaliacao implements Serializable {
 
     public void setAprovados(Double aprovados) {
         this.aprovados = aprovados;
+    }
+
+
+    @Override
+    public String toString() {
+        this.count++;
+
+                return "id:"+id;
     }
 }

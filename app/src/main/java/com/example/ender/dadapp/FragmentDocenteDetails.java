@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.amar.library.ui.StickyScrollView;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -54,11 +55,11 @@ public class FragmentDocenteDetails extends Fragment {
     private TextView tvData;
     private BarChart chart1,chart2,chart3,chart4, chart5;
     private Retrofit retrofit;
-    private int codeResponse;
     private List<Avaliacao> listaAvaliacoes;
     private Spinner compSpinner;
+    private StickyScrollView scrollView;
     private List<String> periodosLabel;
-
+    private int maxViewPort = 6;
 
     @Nullable
     @Override
@@ -85,6 +86,7 @@ public class FragmentDocenteDetails extends Fragment {
         tvData = view.findViewById(R.id.tvData);
         tvComponenteHeader = view.findViewById(R.id.tvComponenteHeader);
         compSpinner = view.findViewById(R.id.spinnerComp);
+        scrollView = view.findViewById(R.id.scrollView);
         chart1 = view.findViewById(R.id.chart1);
         chart2 = view.findViewById(R.id.chart2);
         chart3 = view.findViewById(R.id.chart3);
@@ -101,6 +103,9 @@ public class FragmentDocenteDetails extends Fragment {
             @Override
             public void onResponse(Call<List<Avaliacao>> call, Response<List<Avaliacao>> response) {
                 listaAvaliacoes = response.body();
+                Log.i("JSON", "JSON->"+listaAvaliacoes.toString());
+
+
                 gerarComponentes();
                 ///TODO
             }
@@ -161,37 +166,36 @@ public class FragmentDocenteDetails extends Fragment {
     }
     private List<Float> gerarDados(int id_componente, String tipoDado) {
 
+        String periodoAux;
         periodosLabel = new ArrayList<>();
         List<Float> dados = new ArrayList<>();
+        Log.i("JSON", "SIZE - LISTA->"+listaAvaliacoes.size());
 
-        for(int i=0;i<listaAvaliacoes.size();i++){
-            boolean igual = false;
-            if(id_componente == listaAvaliacoes.get(i).turma.componente.id_componente){
-                String periodoAux = listaAvaliacoes.get(i).turma.ano+"."+listaAvaliacoes.get(i).turma.periodo;
-                for(int j=0;j<periodosLabel.size();j++){
-                    if(periodoAux == periodosLabel.get(j)){
-                        igual=true;
-                    }
-                }
-                if(!igual) {
+        for(Avaliacao a: listaAvaliacoes){
+            if(id_componente == a.turma.componente.id_componente){
+
+                periodoAux = a.turma.ano+"."+a.turma.periodo;
+
                     periodosLabel.add(periodoAux);
 
                     if(tipoDado.equals(FragmentDocenteDetails.MEDIA_APROVADOS))
-                        dados.add(Float.parseFloat(String.valueOf(listaAvaliacoes.get(i).media_aprovados)));
+                        dados.add(Float.parseFloat(String.valueOf(a.media_aprovados)));
                     if(tipoDado.equals(FragmentDocenteDetails.QTD_ALUNOS))
-                        dados.add(Float.parseFloat(String.valueOf(listaAvaliacoes.get(i).qtd_discentes)));
+                        dados.add(Float.parseFloat(String.valueOf(a.qtd_discentes)));
                     if(tipoDado.equals(FragmentDocenteDetails.POSTURA_PROFISSIONAL))
-                        dados.add(Float.parseFloat(String.valueOf(listaAvaliacoes.get(i).postura_profissional)));
+                        dados.add(Float.parseFloat(String.valueOf(a.postura_profissional)));
                     if(tipoDado.equals(FragmentDocenteDetails.ATUACAO_PROFISSIONAL))
-                        dados.add(Float.parseFloat(String.valueOf(listaAvaliacoes.get(i).atuacao_profissional)));
+                        dados.add(Float.parseFloat(String.valueOf(a.atuacao_profissional)));
                     if(tipoDado.equals(FragmentDocenteDetails.APROVADOS))
-                        dados.add(100*(Float.parseFloat(String.valueOf(listaAvaliacoes.get(i).aprovados))));
-                    Log.i("TAG_AVAL", "PERIODO->"+periodoAux);
+                        dados.add(100*(Float.parseFloat(String.valueOf(a.aprovados))));
 
-                }
             }
         }
 
+        for(String s: periodosLabel){
+            Log.i("JSON", "ROTULOS->"+s+"\n");
+
+        }
         return dados;
 
     }
@@ -202,6 +206,7 @@ public class FragmentDocenteDetails extends Fragment {
         chart1.animateY(500);
         chart1.setScaleEnabled(false);
 
+
         XAxis xAxis = chart1.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
@@ -210,7 +215,7 @@ public class FragmentDocenteDetails extends Fragment {
 
         YAxis leftAxis = chart1.getAxisLeft();
         leftAxis.setDrawGridLines(false);
-        leftAxis.setLabelCount(dados.size(), true);
+        leftAxis.setLabelCount(dados.size(), false);
         leftAxis.setAxisMinimum(0f); // start at zero
         leftAxis.setAxisMaximum(10f); // the axis maximum is 10
         leftAxis.setTextColor(Color.BLACK);
@@ -239,9 +244,12 @@ public class FragmentDocenteDetails extends Fragment {
         BarData barData = new BarData(barDataSet);
         barData.setBarWidth(0.5f);
         chart1.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xLabels));
-        chart5.setDrawGridBackground(false);
-        chart5.invalidate();
+        chart1.setDrawGridBackground(false);
+
         chart1.setData(barData);
+        chart1.setVisibleXRangeMaximum(maxViewPort);
+        chart1.invalidate();
+
 
     }
     public void gerarGraficoQtdAlunos(List<Float> dados) {
@@ -259,7 +267,7 @@ public class FragmentDocenteDetails extends Fragment {
 
         YAxis leftAxis = chart2.getAxisLeft();
         leftAxis.setDrawGridLines(false);
-        leftAxis.setLabelCount(dados.size(), true);
+        leftAxis.setLabelCount(dados.size(), false);
         leftAxis.setAxisMinimum(0f); // start at zero
         leftAxis.setAxisMaximum(100f); // the axis maximum is 100
         leftAxis.setTextColor(Color.BLACK);
@@ -288,9 +296,11 @@ public class FragmentDocenteDetails extends Fragment {
         BarData barData = new BarData(barDataSet);
         barData.setBarWidth(0.5f);
         chart2.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xLabels));
-        chart5.setDrawGridBackground(false);
-        chart5.invalidate();
+        chart2.setDrawGridBackground(false);
+
         chart2.setData(barData);
+        chart2.setVisibleXRangeMaximum(maxViewPort);
+        chart2.invalidate();
 
     }
     public void gerarGraficoPosturaProfissional(List<Float> dados) {
@@ -337,9 +347,11 @@ public class FragmentDocenteDetails extends Fragment {
         BarData barData = new BarData(barDataSet);
         barData.setBarWidth(0.5f);
         chart3.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xLabels));
-        chart5.setDrawGridBackground(false);
-        chart5.invalidate();
+        chart3.setDrawGridBackground(false);
         chart3.setData(barData);
+
+        chart3.setVisibleXRangeMaximum(maxViewPort);
+        chart3.invalidate();
 
     }
     public void gerarGraficoAtuacaoProfissional(List<Float> dados) {
@@ -386,9 +398,11 @@ public class FragmentDocenteDetails extends Fragment {
         BarData barData = new BarData(barDataSet);
         barData.setBarWidth(0.5f);
         chart4.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xLabels));
-        chart5.setDrawGridBackground(false);
-        chart5.invalidate();
+        chart4.setDrawGridBackground(false);
+
         chart4.setData(barData);
+        chart4.setVisibleXRangeMaximum(maxViewPort);
+        chart4.invalidate();
 
     }
     public void gerarGraficoAprovados(List<Float> dados) {
@@ -440,8 +454,10 @@ public class FragmentDocenteDetails extends Fragment {
         barData.setBarWidth(0.5f);
         chart5.setDrawGridBackground(false);
         chart5.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xLabels));
-        chart5.invalidate();
+
         chart5.setData(barData);
+        chart5.setVisibleXRangeMaximum(maxViewPort);
+        chart5.invalidate();
 
     }
     private void gerarPerfilDocente() {
