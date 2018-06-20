@@ -33,7 +33,7 @@ public class ListComponentesAdapter extends RecyclerView.Adapter<ListComponentes
     @NonNull
     @Override
     public ResultsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.list_results_searchs,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.list_result_comps,parent,false);
         ResultsHolder resultsHolder = new ResultsHolder(view);
         return  resultsHolder;
     }

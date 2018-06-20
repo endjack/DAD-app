@@ -40,14 +40,14 @@
                 android:layout_height="wrap_content"
                 android:text="Nome Professor"
                 android:textColor="@android:color/black"
-                android:textSize="15dp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tvResultadoSetor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Setor IMD"
-                android:textSize="12dp" />
+                android:textSize="16sp" />
 
 
         </LinearLayout>

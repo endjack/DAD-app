@@ -23,7 +23,7 @@
                 android:layout_height="45dp"
                 android:layout_centerInParent="true"
                 android:alpha="0.9"
-                android:src="@drawable/teacher2" />
+                android:src="@drawable/ic_library_books_black_24dp" />
         </RelativeLayout>
 
 
@@ -38,7 +38,7 @@
                 android:id="@+id/tvResultadoNome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nome Professor"
+                android:text="Nome Componente"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
@@ -46,7 +46,7 @@
                 android:id="@+id/tvResultadoSetor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Setor IMD"
+                android:text="Código"
                 android:textSize="16sp" />
 
 
