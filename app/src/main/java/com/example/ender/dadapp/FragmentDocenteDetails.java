@@ -23,6 +23,8 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,6 +32,8 @@ import java.util.List;
 
 import api.AvaliacaoService;
 import api.ConfigAPI;
+import api.DocenteService;
+import dto.DocenteMediasDTO;
 import models.Avaliacao;
 import models.ComponenteCurricular;
 import models.Docente;
@@ -48,18 +52,14 @@ public class FragmentDocenteDetails extends Fragment {
     private static final String ATUACAO_PROFISSIONAL = "0xJEsnU7P811";
 
     private Docente docente;
-    private TextView tvDetalhesNome;
-    private TextView tvDetalhesFormacao;
-    private TextView tvSetor;
-    private TextView tvComponenteHeader;
-    private TextView tvData;
+    private DocenteMediasDTO docenteMediasDTO;
+    private TextView tvDetalhesNome, tvDetalhesFormacao, tvSetor, tvComponenteHeader, tvData;
+    private TextView tvGeralAprovados, tvGeralMediaAprovados, tvGeralPosturaProf, tvGeralAtuacaoProf;
     private BarChart chart1,chart2,chart3,chart4, chart5;
     private Retrofit retrofit;
     private List<Avaliacao> listaAvaliacoes;
     private Spinner compSpinner;
-    private StickyScrollView scrollView;
     private List<String> periodosLabel;
-    private int maxViewPort = 6;
 
     @Nullable
     @Override
@@ -74,7 +74,7 @@ public class FragmentDocenteDetails extends Fragment {
 
         inicializarObjetos(view);
         gerarPerfilDocente();
-
+        carregarDadosMediasGerais(docente.id_docente);
         carregarAvaliacao(String.valueOf(docente.id_docente));
 
         return view;
@@ -84,9 +84,12 @@ public class FragmentDocenteDetails extends Fragment {
         tvDetalhesFormacao = view.findViewById(R.id.tvDetalhesFormacao);
         tvSetor = view.findViewById(R.id.tvSetor);
         tvData = view.findViewById(R.id.tvData);
+        tvGeralAprovados = view.findViewById(R.id.tvGeralAprovados);
+        tvGeralMediaAprovados = view.findViewById(R.id.tvGeralMediaAprovados);
+        tvGeralPosturaProf = view.findViewById(R.id.tvGeralPosturaProf);
+        tvGeralAtuacaoProf = view.findViewById(R.id.tvGeralAtuacaoProf);
         tvComponenteHeader = view.findViewById(R.id.tvComponenteHeader);
         compSpinner = view.findViewById(R.id.spinnerComp);
-        scrollView = view.findViewById(R.id.scrollView);
         chart1 = view.findViewById(R.id.chart1);
         chart2 = view.findViewById(R.id.chart2);
         chart3 = view.findViewById(R.id.chart3);
@@ -94,8 +97,43 @@ public class FragmentDocenteDetails extends Fragment {
         chart5 = view.findViewById(R.id.chart5);
 
         docente = (Docente) getArguments().get("docente");
+
+    }
+    private void carregarDadosMediasGerais(Integer id_docente) {
+
+        final DocenteService docenteService = retrofit.create(DocenteService.class);
+        final Call<DocenteMediasDTO> callDto = docenteService.getMediasById(id_docente);
+
+        callDto.enqueue(new Callback<DocenteMediasDTO>() {
+            @Override
+            public void onResponse(Call<DocenteMediasDTO> call, Response<DocenteMediasDTO> response) {
+
+                docenteMediasDTO = response.body();
+                gerarMediasGerais(docenteMediasDTO);
+
+            }
+
+            @Override
+            public void onFailure(Call<DocenteMediasDTO> call, Throwable t) {
+
+            }
+        });
+
+    }
+    private void gerarMediasGerais(DocenteMediasDTO docenteMediasDTO) {
+
+        DecimalFormat mFormat = new DecimalFormat("###,###,##0");
+            tvGeralAprovados.setText(String.valueOf(mFormat.format(docenteMediasDTO.aprovados*100)+"%"));
+        mFormat = new DecimalFormat("###,###,##0.0");
+            tvGeralMediaAprovados.setText(String.valueOf(mFormat.format(docenteMediasDTO.media_aprovados)));
+        mFormat = new DecimalFormat("###,###,##0.00");
+            tvGeralPosturaProf.setText(String.valueOf(mFormat.format(docenteMediasDTO.postura_profissional)));
+            tvGeralAtuacaoProf.setText(String.valueOf(mFormat.format(docenteMediasDTO.atuacao_profissional)));
+
     }
     private void carregarAvaliacao(String id_docente) {
+
+
         AvaliacaoService avalService = retrofit.create(AvaliacaoService.class);
         final Call<List<Avaliacao>> call = avalService.getAvaliacoes(id_docente);
 
@@ -247,7 +285,7 @@ public class FragmentDocenteDetails extends Fragment {
         chart1.setDrawGridBackground(false);
 
         chart1.setData(barData);
-        chart1.setVisibleXRangeMaximum(maxViewPort);
+        //chart1.setVisibleXRangeMaximum(maxViewPort);
         chart1.invalidate();
 
 
@@ -299,7 +337,7 @@ public class FragmentDocenteDetails extends Fragment {
         chart2.setDrawGridBackground(false);
 
         chart2.setData(barData);
-        chart2.setVisibleXRangeMaximum(maxViewPort);
+       // chart2.setVisibleXRangeMaximum(maxViewPort);
         chart2.invalidate();
 
     }
@@ -350,7 +388,7 @@ public class FragmentDocenteDetails extends Fragment {
         chart3.setDrawGridBackground(false);
         chart3.setData(barData);
 
-        chart3.setVisibleXRangeMaximum(maxViewPort);
+        //chart3.setVisibleXRangeMaximum(maxViewPort);
         chart3.invalidate();
 
     }
@@ -401,7 +439,7 @@ public class FragmentDocenteDetails extends Fragment {
         chart4.setDrawGridBackground(false);
 
         chart4.setData(barData);
-        chart4.setVisibleXRangeMaximum(maxViewPort);
+       // chart4.setVisibleXRangeMaximum(maxViewPort);
         chart4.invalidate();
 
     }
@@ -456,7 +494,7 @@ public class FragmentDocenteDetails extends Fragment {
         chart5.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xLabels));
 
         chart5.setData(barData);
-        chart5.setVisibleXRangeMaximum(maxViewPort);
+       // chart5.setVisibleXRangeMaximum(maxViewPort);
         chart5.invalidate();
 
     }
@@ -469,6 +507,5 @@ public class FragmentDocenteDetails extends Fragment {
         String dataFormatada = new SimpleDateFormat("dd.MM.yyyy").format(data);
         tvData.setText(dataFormatada);
     }
-
 
   }
