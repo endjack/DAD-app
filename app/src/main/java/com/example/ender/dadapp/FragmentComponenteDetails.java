@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,15 +50,15 @@ public class FragmentComponenteDetails extends Fragment {
     private static final String ATUACAO_PROFISSIONAL = "0xJEsnU7P811";
 
     private ComponenteCurricular componente;
-    private DocenteMediasDTO docenteMediasDTO;
     private TextView tvDetalhesNome, tvDetalhesFormacao, tvSetor, tvComponenteHeader, tvData;
-    private TextView tvGeralAprovados, tvGeralMediaAprovados, tvGeralPosturaProf, tvGeralAtuacaoProf;
+    private TextView label02,label04,labelSpinner;
     private LinearLayout llDadosGerais;
     private BarChart chart1,chart2,chart3,chart4, chart5;
     private Retrofit retrofit;
     private List<Avaliacao> listaAvaliacoes;
     private Spinner compSpinner;
     private List<String> periodosLabel;
+    private CardView cardFormacao;
 
     @Nullable
     @Override
@@ -72,7 +73,6 @@ public class FragmentComponenteDetails extends Fragment {
 
         inicializarObjetos(view);
         gerarPerfilComponente();
-        //carregarDadosMediasGerais(componente.id_componente);
         carregarAvaliacoes(componente.id_componente);
 
         return view;
@@ -82,10 +82,6 @@ public class FragmentComponenteDetails extends Fragment {
         tvDetalhesFormacao = view.findViewById(R.id.tvDetalhesFormacao);
         tvSetor = view.findViewById(R.id.tvSetor);
         tvData = view.findViewById(R.id.tvData);
-        tvGeralAprovados = view.findViewById(R.id.tvGeralAprovados);
-        tvGeralMediaAprovados = view.findViewById(R.id.tvGeralMediaAprovados);
-        tvGeralPosturaProf = view.findViewById(R.id.tvGeralPosturaProf);
-        tvGeralAtuacaoProf = view.findViewById(R.id.tvGeralAtuacaoProf);
         tvComponenteHeader = view.findViewById(R.id.tvComponenteHeader);
         compSpinner = view.findViewById(R.id.spinnerComp);
         chart1 = view.findViewById(R.id.chart1);
@@ -96,40 +92,23 @@ public class FragmentComponenteDetails extends Fragment {
 
         componente = (ComponenteCurricular) getArguments().get("componente");
 
+        //Mudanças no layout para detalhar componente
+
+        label02 = view.findViewById(R.id.label02);
+        label02.setText("Código");
+
         llDadosGerais = view.findViewById(R.id.llDadosGerais);
         llDadosGerais.setVisibility(View.GONE);
 
-    }
-    private void carregarDadosMediasGerais(Integer id_docente) {
+        label04 = view.findViewById(R.id.label04);
+        label04.setVisibility(View.GONE);
 
-        final DocenteService docenteService = retrofit.create(DocenteService.class);
-        final Call<DocenteMediasDTO> callDto = docenteService.getMediasById(id_docente);
+        labelSpinner = view.findViewById(R.id.labelSpinner);
+        labelSpinner.setText("Selecione o Docente:");
 
-        callDto.enqueue(new Callback<DocenteMediasDTO>() {
-            @Override
-            public void onResponse(Call<DocenteMediasDTO> call, Response<DocenteMediasDTO> response) {
+        cardFormacao = view.findViewById(R.id.cardFormacao);
+        cardFormacao.setVisibility(View.GONE);
 
-                docenteMediasDTO = response.body();
-                gerarMediasGerais(docenteMediasDTO);
-
-            }
-
-            @Override
-            public void onFailure(Call<DocenteMediasDTO> call, Throwable t) {
-
-            }
-        });
-
-    }
-    private void gerarMediasGerais(DocenteMediasDTO docenteMediasDTO) {
-
-        DecimalFormat mFormat = new DecimalFormat("###,###,##0");
-            tvGeralAprovados.setText(String.valueOf(mFormat.format(docenteMediasDTO.aprovados*100)+"%"));
-        mFormat = new DecimalFormat("###,###,##0.0");
-            tvGeralMediaAprovados.setText(String.valueOf(mFormat.format(docenteMediasDTO.media_aprovados)));
-        mFormat = new DecimalFormat("###,###,##0.00");
-            tvGeralPosturaProf.setText(String.valueOf(mFormat.format(docenteMediasDTO.postura_profissional)));
-            tvGeralAtuacaoProf.setText(String.valueOf(mFormat.format(docenteMediasDTO.atuacao_profissional)));
 
     }
     private void carregarAvaliacoes(Integer id_componente) {

@@ -48,6 +48,7 @@ public class ListComponentesAdapter extends RecyclerView.Adapter<ListComponentes
            @Override
            public void onClick(View v) {
                listener.onDetailsClick(componenteCurricular);
+               notifyDataSetChanged();
            }
        });
 
@@ -56,6 +57,14 @@ public class ListComponentesAdapter extends RecyclerView.Adapter<ListComponentes
     @Override
     public int getItemCount() {
         return itens.size();
+    }
+
+    public void clear() {
+        if(!itens.isEmpty()) {
+            final int size = itens.size();
+            itens.clear();
+            notifyItemRangeRemoved(0, size);
+        }
     }
 
 

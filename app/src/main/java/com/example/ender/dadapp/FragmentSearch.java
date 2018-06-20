@@ -91,6 +91,12 @@ public class FragmentSearch extends Fragment {
                     }
 
                 }else{
+                    if(searchResultsListAdapter != null){
+                        searchResultsListAdapter.clear();
+                    }
+                    if(listComponentesAdapter != null){
+                        listComponentesAdapter.clear();
+                    }
                     tvInfo.setText("Consulta vazia, digite nome");
                     exibirInfo(true);
                 }
@@ -178,8 +184,6 @@ public class FragmentSearch extends Fragment {
                                 exibirProgressBar(true);
                             }
                         });
-                        //listaDocentes = call.execute().body();
-
                         listaDocentes = call.execute().body();
 
 
@@ -190,14 +194,13 @@ public class FragmentSearch extends Fragment {
                         }
 
                         if(isRunning) {
-                            //listaDocentes = (List<Docente>) response.body();
-
 
                                 handler.post(new Runnable() {
                                     @Override
                                     public void run() {
 
                                         if (!listaDocentes.isEmpty()) {
+                                            recyclerView.setVisibility(View.VISIBLE);
                                             searchResultsListAdapter = new SearchResultsListAdapter(getActivity(),
                                                     listaDocentes, new SearchResultsListAdapter.DocenteDetailsListener() {
                                                 @Override
@@ -210,18 +213,19 @@ public class FragmentSearch extends Fragment {
                                             exibirProgressBar(false);
                                             exibirInfo(false);
                                         }else {
-
-                                            searchResultsListAdapter = new SearchResultsListAdapter(getActivity(), listaDocentes, null);
-                                            searchResultsListAdapter.notifyDataSetChanged();
-
+                                            recyclerView.setVisibility(View.GONE);
+                                            if(searchResultsListAdapter != null){
+                                                searchResultsListAdapter.clear();
+                                            }
+                                            if(listComponentesAdapter != null){
+                                                listComponentesAdapter.clear();
+                                            }
                                             tvInfo.setText("Sem resultados");
                                             exibirProgressBar(false);
                                             exibirInfo(true);
                                             isRunning = false;
                                             return;
                                         }
-
-
                                     }
                                 });
 
@@ -264,8 +268,6 @@ public class FragmentSearch extends Fragment {
                             exibirProgressBar(true);
                         }
                     });
-                    //listaDocentes = call.execute().body();
-
                     listaComps = call.execute().body();
 
 
@@ -276,14 +278,13 @@ public class FragmentSearch extends Fragment {
                     }
 
                     if(isRunning) {
-                        //listaDocentes = (List<Docente>) response.body();
-
 
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
 
                                 if (!listaComps.isEmpty()) {
+                                    recyclerView.setVisibility(View.VISIBLE);
                                     listComponentesAdapter = new ListComponentesAdapter(getActivity(),
                                             listaComps, new ListComponentesAdapter.ComponenteDetailsListener() {
                                         @Override
@@ -296,6 +297,15 @@ public class FragmentSearch extends Fragment {
                                     exibirProgressBar(false);
                                     exibirInfo(false);
                                 }else {
+                                    recyclerView.setVisibility(View.GONE);
+
+                                    if(listComponentesAdapter != null){
+                                        listComponentesAdapter.clear();
+                                    }
+
+                                    if(searchResultsListAdapter != null){
+                                        searchResultsListAdapter.clear();
+                                    }
 
                                     tvInfo.setText("Sem resultados");
                                     exibirProgressBar(false);

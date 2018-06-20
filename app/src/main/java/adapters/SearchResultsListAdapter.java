@@ -49,16 +49,23 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
            @Override
            public void onClick(View v) {
                listener.onDetailsClick(docente);
+               notifyDataSetChanged();
            }
        });
 
     }
 
-
-
     @Override
     public int getItemCount() {
         return itens.size();
+    }
+
+    public void clear() {
+        if(!itens.isEmpty()) {
+            final int size = itens.size();
+            itens.clear();
+            notifyItemRangeRemoved(0, size);
+        }
     }
 
 
