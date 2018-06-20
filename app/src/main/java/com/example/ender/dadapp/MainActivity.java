@@ -12,9 +12,10 @@ import java.io.Serializable;
 import java.util.List;
 
 import models.Avaliacao;
+import models.ComponenteCurricular;
 import models.Docente;
 
-public class MainActivity extends AppCompatActivity implements FragmentSearch.DetalharDocenteListener{
+public class MainActivity extends AppCompatActivity implements FragmentSearch.DetalharDocenteListener, FragmentSearch.DetalharComponenteListener{
 
     private BottomNavigationView bottomNavigationView;
     private Bundle saveDadosFragments;
@@ -97,4 +98,17 @@ public class MainActivity extends AppCompatActivity implements FragmentSearch.De
                 .commit();
     }
 
+    @Override
+    public void detalharComponente(@NonNull ComponenteCurricular componente) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("componente", componente);
+
+        FragmentComponenteDetails fragmentDetails = new FragmentComponenteDetails();
+        fragmentDetails.setArguments(bundle);
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_layout,fragmentDetails)
+                .addToBackStack(fragmentDetails.getClass().toString())
+                .commit();
+    }
 }

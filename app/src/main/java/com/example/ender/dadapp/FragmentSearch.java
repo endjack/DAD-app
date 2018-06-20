@@ -15,28 +15,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.io.IOException;
-import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import adapters.ListComponentesAdapter;
 import adapters.SearchResultsListAdapter;
-import api.AvaliacaoService;
+import api.ComponenteService;
 import api.ConfigAPI;
-import api.DocenteDeserializable;
 import api.DocenteService;
-import models.Avaliacao;
+import models.ComponenteCurricular;
 import models.Docente;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -44,17 +37,20 @@ public class FragmentSearch extends Fragment {
 
     private RecyclerView recyclerView;
     private SearchResultsListAdapter searchResultsListAdapter;
+    private ListComponentesAdapter listComponentesAdapter;
     private Retrofit retrofit;
     private EditText edtBuscar;
     private TextView tvInfo;
     private Button bttBuscar;
     private DetalharDocenteListener listener;
+    private DetalharComponenteListener componenteListener;
+
     private String ultimaPesquisa="";
     private ProgressBar progressBarTop;
     private String nome;
-    private int codeResponse;
     private volatile boolean isRunning = false;
-    private String msgError;
+    private RadioButton radioDocente, radioComp;
+
 
     @Nullable
     @Override
@@ -72,6 +68,8 @@ public class FragmentSearch extends Fragment {
         bttBuscar = view.findViewById(R.id.bttBuscar);
         progressBarTop = view.findViewById(R.id.progressBar);
         tvInfo = view.findViewById(R.id.tvInfo);
+        radioDocente = view.findViewById(R.id.radioDocente);
+        radioComp = view.findViewById(R.id.radioComps);
         exibirInfo(false);
 
 
@@ -86,7 +84,12 @@ public class FragmentSearch extends Fragment {
                 nome = edtBuscar.getText().toString();
                 if(!nome.isEmpty()){
                     ultimaPesquisa = nome;
-                    carregarTodosDocentes(nome);
+                    if(radioDocente.isChecked()){
+                        carregarTodosDocentes(nome);
+                    }else{
+                        carregarTodosComponentes(nome);
+                    }
+
                 }else{
                     tvInfo.setText("Consulta vazia, digite nome");
                     exibirInfo(true);
@@ -164,6 +167,7 @@ public class FragmentSearch extends Fragment {
         final Handler handler = new Handler(Looper.getMainLooper());
         new Thread(new Runnable() {
             List<Docente> listaDocentes;
+            int codeResponse;
             @Override
             public void run() {
                 isRunning = true;
@@ -183,7 +187,6 @@ public class FragmentSearch extends Fragment {
 
                         if(codeResponse == 400){
                             isRunning = false;
-
                         }
 
                         if(isRunning) {
@@ -196,7 +199,7 @@ public class FragmentSearch extends Fragment {
 
                                         if (!listaDocentes.isEmpty()) {
                                             searchResultsListAdapter = new SearchResultsListAdapter(getActivity(),
-                                                    listaDocentes, new SearchResultsListAdapter.ItemDetailsListener() {
+                                                    listaDocentes, new SearchResultsListAdapter.DocenteDetailsListener() {
                                                 @Override
                                                 public void onDetailsClick(Docente docente) {
                                                     listener.detalharDocente(docente);
@@ -242,11 +245,98 @@ public class FragmentSearch extends Fragment {
 
     }
 
+    public void carregarTodosComponentes(String nome) {
+        ComponenteService compService = retrofit.create(ComponenteService.class);
+        final Call<List<ComponenteCurricular>> call = compService.getComponentes(nome);
+
+
+        final Handler handler = new Handler(Looper.getMainLooper());
+        new Thread(new Runnable() {
+            List<ComponenteCurricular> listaComps;
+            int codeResponse;
+            @Override
+            public void run() {
+                isRunning = true;
+                try {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            exibirProgressBar(true);
+                        }
+                    });
+                    //listaDocentes = call.execute().body();
+
+                    listaComps = call.execute().body();
+
+
+                    Log.i("TAG_RESPONSE","Code Response: "+listaComps);
+
+                    if(codeResponse == 400){
+                        isRunning = false;
+                    }
+
+                    if(isRunning) {
+                        //listaDocentes = (List<Docente>) response.body();
+
+
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                if (!listaComps.isEmpty()) {
+                                    listComponentesAdapter = new ListComponentesAdapter(getActivity(),
+                                            listaComps, new ListComponentesAdapter.ComponenteDetailsListener() {
+                                        @Override
+                                        public void onDetailsClick(ComponenteCurricular componente) {
+                                            componenteListener.detalharComponente(componente);
+                                        }
+                                    });
+
+                                    recyclerView.setAdapter(listComponentesAdapter);
+                                    exibirProgressBar(false);
+                                    exibirInfo(false);
+                                }else {
+
+                                    tvInfo.setText("Sem resultados");
+                                    exibirProgressBar(false);
+                                    exibirInfo(true);
+                                    isRunning = false;
+                                    return;
+                                }
+
+
+                            }
+                        });
+
+                    }else{
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                exibirProgressBar(false);
+                                Toast.makeText(getActivity(), "Servidor off-line", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        return;
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+    }
+
     /**
      * Interface para comunicação com a MainActivity
      */
     public interface DetalharDocenteListener{
         void detalharDocente(Docente docente);
+    }
+
+    public interface DetalharComponenteListener {
+        void detalharComponente(ComponenteCurricular componente);
     }
 
     /**
@@ -256,9 +346,10 @@ public class FragmentSearch extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (activity instanceof FragmentSearch.DetalharDocenteListener) {
+        if (activity instanceof FragmentSearch.DetalharDocenteListener || activity instanceof FragmentSearch.DetalharComponenteListener) {
             listener = (FragmentSearch.DetalharDocenteListener) activity;
-        } else {
+            componenteListener = (FragmentSearch.DetalharComponenteListener) activity;
+        }else {
             throw new ClassCastException();
         }
     }

@@ -10,10 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.amar.library.ui.StickyScrollView;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -23,11 +23,8 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
-import java.io.IOException;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import api.AvaliacaoService;
@@ -43,7 +40,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class FragmentDocenteDetails extends Fragment {
+public class FragmentComponenteDetails extends Fragment {
 
     private static final String MEDIA_APROVADOS = "0xAp215Amud2";
     private static final String APROVADOS = "0xXpWE51Amr3";
@@ -51,10 +48,11 @@ public class FragmentDocenteDetails extends Fragment {
     private static final String POSTURA_PROFISSIONAL = "0xBJsn145s2SSk";
     private static final String ATUACAO_PROFISSIONAL = "0xJEsnU7P811";
 
-    private Docente docente;
+    private ComponenteCurricular componente;
     private DocenteMediasDTO docenteMediasDTO;
     private TextView tvDetalhesNome, tvDetalhesFormacao, tvSetor, tvComponenteHeader, tvData;
     private TextView tvGeralAprovados, tvGeralMediaAprovados, tvGeralPosturaProf, tvGeralAtuacaoProf;
+    private LinearLayout llDadosGerais;
     private BarChart chart1,chart2,chart3,chart4, chart5;
     private Retrofit retrofit;
     private List<Avaliacao> listaAvaliacoes;
@@ -73,9 +71,9 @@ public class FragmentDocenteDetails extends Fragment {
                 .build();
 
         inicializarObjetos(view);
-        gerarPerfilDocente();
-        carregarDadosMediasGerais(docente.id_docente);
-        carregarAvaliacao(String.valueOf(docente.id_docente));
+        gerarPerfilComponente();
+        //carregarDadosMediasGerais(componente.id_componente);
+        carregarAvaliacoes(componente.id_componente);
 
         return view;
     }
@@ -96,7 +94,10 @@ public class FragmentDocenteDetails extends Fragment {
         chart4 = view.findViewById(R.id.chart4);
         chart5 = view.findViewById(R.id.chart5);
 
-        docente = (Docente) getArguments().get("docente");
+        componente = (ComponenteCurricular) getArguments().get("componente");
+
+        llDadosGerais = view.findViewById(R.id.llDadosGerais);
+        llDadosGerais.setVisibility(View.GONE);
 
     }
     private void carregarDadosMediasGerais(Integer id_docente) {
@@ -131,20 +132,19 @@ public class FragmentDocenteDetails extends Fragment {
             tvGeralAtuacaoProf.setText(String.valueOf(mFormat.format(docenteMediasDTO.atuacao_profissional)));
 
     }
-    private void carregarAvaliacao(String id_docente) {
+    private void carregarAvaliacoes(Integer id_componente) {
 
 
         AvaliacaoService avalService = retrofit.create(AvaliacaoService.class);
-        final Call<List<Avaliacao>> call = avalService.getAvaliacoes(id_docente);
+        final Call<List<Avaliacao>> call = avalService.getAvaliacoesByComponente(id_componente);
+        Log.i("JSON", "ID-COMPONENTE->"+id_componente);
 
         call.enqueue(new Callback<List<Avaliacao>>() {
             @Override
             public void onResponse(Call<List<Avaliacao>> call, Response<List<Avaliacao>> response) {
                 listaAvaliacoes = response.body();
                 Log.i("JSON", "JSON->"+listaAvaliacoes.toString());
-
-
-                gerarComponentes();
+                gerarDocentes();
                 ///TODO
             }
 
@@ -154,27 +154,28 @@ public class FragmentDocenteDetails extends Fragment {
             }
         });
     }
-    private void gerarComponentes() {
-        final List<ComponenteCurricular> nomeComps = new ArrayList<>();
+    private void gerarDocentes() {
+        final List<Docente> nomeDocentes = new ArrayList<>();
+
         for(int i=0; i<listaAvaliacoes.size();i++) {
-            String compInicial = listaAvaliacoes.get(i).turma.componente.nome;
+            String docenteInicial = listaAvaliacoes.get(i).docente.nome;
             boolean igual = false;
 
-            for (ComponenteCurricular comp : nomeComps) {
-                if (compInicial.equals(comp.nome)) {
+            for (Docente docente : nomeDocentes) {
+                if (docenteInicial.equals(docente.nome)) {
                     igual = true;
                 }
             }
             if (!igual) {
-                nomeComps.add(new ComponenteCurricular(listaAvaliacoes.get(i).turma.componente.id_componente,
-                        listaAvaliacoes.get(i).turma.componente.codigo, listaAvaliacoes.get(i).turma.componente.nome,
+                nomeDocentes.add(new Docente(listaAvaliacoes.get(i).docente.id_docente,
+                        listaAvaliacoes.get(i).docente.nome,null ,
                         null, null));
             }
         }
 
         //Spinner
-        ArrayAdapter<ComponenteCurricular> adapter =
-                new ArrayAdapter (getActivity(),  android.R.layout.simple_spinner_dropdown_item, nomeComps);
+        ArrayAdapter<Docente> adapter =
+                new ArrayAdapter(getActivity(),  android.R.layout.simple_spinner_dropdown_item, nomeDocentes);
         adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
 
         compSpinner.setAdapter(adapter);
@@ -183,15 +184,15 @@ public class FragmentDocenteDetails extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                int idComponente = nomeComps.get(position).id_componente;
+                int idDocente = nomeDocentes.get(position).id_docente;
 
-                gerarGraficoQtdAlunos(gerarDados(idComponente,FragmentDocenteDetails.QTD_ALUNOS));
-                gerarGraficoAprovados(gerarDados(idComponente,FragmentDocenteDetails.APROVADOS));
-                gerarGraficoMediaAprovados(gerarDados(idComponente,FragmentDocenteDetails.MEDIA_APROVADOS));
-                gerarGraficoPosturaProfissional(gerarDados(idComponente,FragmentDocenteDetails.POSTURA_PROFISSIONAL));
-                gerarGraficoAtuacaoProfissional(gerarDados(idComponente,FragmentDocenteDetails.ATUACAO_PROFISSIONAL));
+                gerarGraficoQtdAlunos(gerarDados(idDocente, FragmentComponenteDetails.QTD_ALUNOS));
+                gerarGraficoAprovados(gerarDados(idDocente, FragmentComponenteDetails.APROVADOS));
+                gerarGraficoMediaAprovados(gerarDados(idDocente, FragmentComponenteDetails.MEDIA_APROVADOS));
+                gerarGraficoPosturaProfissional(gerarDados(idDocente, FragmentComponenteDetails.POSTURA_PROFISSIONAL));
+                gerarGraficoAtuacaoProfissional(gerarDados(idDocente, FragmentComponenteDetails.ATUACAO_PROFISSIONAL));
 
-                tvComponenteHeader.setText(nomeComps.get(position).nome);
+                tvComponenteHeader.setText(nomeDocentes.get(position).nome);
 
             }
 
@@ -202,7 +203,7 @@ public class FragmentDocenteDetails extends Fragment {
         });
 
     }
-    private List<Float> gerarDados(int id_componente, String tipoDado) {
+    private List<Float> gerarDados(int id_docente, String tipoDado) {
 
         String periodoAux;
         periodosLabel = new ArrayList<>();
@@ -210,21 +211,21 @@ public class FragmentDocenteDetails extends Fragment {
         Log.i("JSON", "SIZE - LISTA->"+listaAvaliacoes.size());
 
         for(Avaliacao a: listaAvaliacoes){
-            if(id_componente == a.turma.componente.id_componente){
+            if(id_docente == a.docente.id_docente){
 
                 periodoAux = a.turma.ano+"."+a.turma.periodo;
 
                     periodosLabel.add(periodoAux);
 
-                    if(tipoDado.equals(FragmentDocenteDetails.MEDIA_APROVADOS))
+                    if(tipoDado.equals(FragmentComponenteDetails.MEDIA_APROVADOS))
                         dados.add(Float.parseFloat(String.valueOf(a.media_aprovados)));
-                    if(tipoDado.equals(FragmentDocenteDetails.QTD_ALUNOS))
+                    if(tipoDado.equals(FragmentComponenteDetails.QTD_ALUNOS))
                         dados.add(Float.parseFloat(String.valueOf(a.qtd_discentes)));
-                    if(tipoDado.equals(FragmentDocenteDetails.POSTURA_PROFISSIONAL))
+                    if(tipoDado.equals(FragmentComponenteDetails.POSTURA_PROFISSIONAL))
                         dados.add(Float.parseFloat(String.valueOf(a.postura_profissional)));
-                    if(tipoDado.equals(FragmentDocenteDetails.ATUACAO_PROFISSIONAL))
+                    if(tipoDado.equals(FragmentComponenteDetails.ATUACAO_PROFISSIONAL))
                         dados.add(Float.parseFloat(String.valueOf(a.atuacao_profissional)));
-                    if(tipoDado.equals(FragmentDocenteDetails.APROVADOS))
+                    if(tipoDado.equals(FragmentComponenteDetails.APROVADOS))
                         dados.add(100*(Float.parseFloat(String.valueOf(a.aprovados))));
 
             }
@@ -498,14 +499,11 @@ public class FragmentDocenteDetails extends Fragment {
         chart5.invalidate();
 
     }
-    private void gerarPerfilDocente() {
-        tvDetalhesNome.setText(docente.nome.toUpperCase());
-        tvDetalhesFormacao.setText(docente.formacao);
-        tvSetor.setText(docente.unidade.lotacao);
-
-        Date data = new Date(docente.data_admissao.getTime());
-        String dataFormatada = new SimpleDateFormat("dd.MM.yyyy").format(data);
-        tvData.setText(dataFormatada);
+    private void gerarPerfilComponente() {
+        tvDetalhesNome.setText(componente.nome.toUpperCase());
+        tvDetalhesFormacao.setText(componente.codigo);
+        tvSetor.setText(componente.unidade.lotacao);
+        tvData.setText(componente.codigo);
     }
 
   }

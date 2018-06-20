@@ -63,4 +63,10 @@ public class Docente implements Serializable{
     public void setData_admissao(Date data_admissao) {
         this.data_admissao = data_admissao;
     }
+
+
+    @Override
+    public String toString() {
+        return this.nome;
+    }
 }

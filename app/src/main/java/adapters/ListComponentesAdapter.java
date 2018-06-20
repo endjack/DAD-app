@@ -2,7 +2,6 @@ package adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,16 +14,16 @@ import com.example.ender.dadapp.R;
 
 import java.util.List;
 
+import models.ComponenteCurricular;
 import models.Docente;
 
-public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResultsListAdapter.ResultsHolder> {
+public class ListComponentesAdapter extends RecyclerView.Adapter<ListComponentesAdapter.ResultsHolder> {
 
     private Context context;
-    private List<Docente> itens;
-    DocenteDetailsListener listener;
+    private List<ComponenteCurricular> itens;
+    ComponenteDetailsListener listener;
 
-
-    public SearchResultsListAdapter(Context context, List lista, DocenteDetailsListener listener) {
+    public ListComponentesAdapter(Context context, List lista, ComponenteDetailsListener listener) {
         this.context = context;
         this.itens = lista;
         this.listener = listener;
@@ -41,20 +40,18 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
 
     @Override
     public void onBindViewHolder(@NonNull final ResultsHolder holder, final int position) {
-       final Docente docente = itens.get(position);
-       holder.tvResultadoNome.setText(docente.nome.toUpperCase());
-       holder.tvResultadoSetor.setText("Setor: "+docente.unidade.lotacao);
+       final ComponenteCurricular componenteCurricular = itens.get(position);
+       holder.tvResultadoNome.setText(componenteCurricular.nome.toUpperCase());
+       holder.tvResultadoSetor.setText("Código: "+componenteCurricular.codigo);
 
        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               listener.onDetailsClick(docente);
+               listener.onDetailsClick(componenteCurricular);
            }
        });
 
     }
-
-
 
     @Override
     public int getItemCount() {
@@ -77,8 +74,8 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
         }
     }
 
-    public interface DocenteDetailsListener {
-        public void onDetailsClick(Docente docente);
+    public interface ComponenteDetailsListener {
+        void onDetailsClick(ComponenteCurricular componente);
     }
 
 }
